@@ -12,3 +12,7 @@ Make sure you have basic tools installed:
 
 1. Open a new terminal and run: `cargo make serve`
 1. Open a second terminal run: `cargo make watch`
+
+## Build for release
+
+`cargo make build_release`
