@@ -13,14 +13,10 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // 2d camera
     commands.spawn(Camera2dBundle::default());
     // Demonstrate changing translation
-    commands.spawn((
-        Text2dBundle { 
-            text: Text::from_section("test", text_style.clone())
-                .with_alignment(text_alignment),
-            ..default()
-        },
-    ));
-    
+    commands.spawn((Text2dBundle {
+        text: Text::from_section("test", text_style).with_alignment(text_alignment),
+        ..default()
+    },));
 }
 
 // ------ ------
