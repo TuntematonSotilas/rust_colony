@@ -9,13 +9,16 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-bevy = "0.9.1"
-#{ version = "0.9.1", default-features = false, features = [
-#    "bevy_core_pipeline",
-#    "bevy_render",
-#    "bevy_asset",
-#    "bevy_sprite",
-#] }
+#bevy = "0.9.1"
+bevy ={ version = "0.9.1", default-features = true, features = [
+   "bevy_core_pipeline",
+   "bevy_render",
+   "bevy_asset",
+   "bevy_sprite",
+   "png",
+   "bevy_text",
+   "bevy_sprite",
+] }
 wasm-bindgen = "0.2.84"
 bevy_ecs_tilemap = "0.9.0"
 anyhow = "1.0"

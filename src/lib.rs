@@ -29,6 +29,13 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         text: Text::from_section("test", text_style).with_alignment(text_alignment),
         ..default()
     },));*/
+
+    commands.spawn(SpriteBundle {
+        texture: asset_server.load("public/tiles.png"),
+        ..default()
+    });
+
+
 }
 
 // ------ ------
