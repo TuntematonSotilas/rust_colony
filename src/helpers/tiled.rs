@@ -12,7 +12,7 @@
 //   * When the 'atlas' feature is enabled tilesets using a collection of images will be skipped.
 //   * Only finite tile layers are loaded. Infinite tile layers and object layers will be skipped.
 
-use std::io::BufReader;
+use std::{io::BufReader, path::PathBuf};
 
 use bevy::{
     asset::{AssetLoader, AssetPath, LoadedAsset},
@@ -46,9 +46,6 @@ pub struct TiledMap {
 
     pub tilemap_textures: HashMap<usize, TilemapTexture>,
 
-    // The offset into the tileset_images for each tile id within each tileset.
-    #[cfg(not(feature = "atlas"))]
-    pub tile_image_offsets: HashMap<(usize, tiled::TileId), u32>,
 }
 
 // Stores a list of tiled layers.
@@ -88,38 +85,16 @@ impl AssetLoader for TiledLoader {
 
             let mut dependencies = Vec::new();
             let mut tilemap_textures = HashMap::default();
-            #[cfg(not(feature = "atlas"))]
-            let mut tile_image_offsets = HashMap::default();
-
+            
             for (tileset_index, tileset) in map.tilesets().iter().enumerate() {
                 log::info!("tilesets");
                 let tilemap_texture = match &tileset.image {
                     None => {
-                        #[cfg(feature = "atlas")]
-                        {
-                            log::info!("Skipping image collection tileset '{}' which is incompatible with atlas feature", tileset.name);
-                            continue;
-                        }
-
-                        #[cfg(not(feature = "atlas"))]
-                        {
-                            let mut tile_images: Vec<Handle<Image>> = Vec::new();
-                            for (tile_id, tile) in tileset.tiles() {
-                                if let Some(img) = &tile.image {
-                                    let tile_path = tmx_dir.join(&img.source);
-                                    let asset_path = AssetPath::new(tile_path, None);
-                                    log::info!("Loading tile image from {asset_path:?} as image ({tileset_index}, {tile_id})");
-                                    let texture: Handle<Image> =
-                                        load_context.get_handle(asset_path.clone());
-                                    tile_image_offsets
-                                        .insert((tileset_index, tile_id), tile_images.len() as u32);
-                                    tile_images.push(texture.clone());
-                                    dependencies.push(asset_path);
-                                }
-                            }
-
-                            TilemapTexture::Vector(tile_images)
-                        }
+                    
+                        log::info!("Skipping image collection tileset '{}' which is incompatible with atlas feature", tileset.name);
+                        let asset_path = AssetPath::new(PathBuf::new(), None);
+                        let texture: Handle<Image> = load_context.get_handle(asset_path.clone());
+                        TilemapTexture::Single(texture)
                     }
                     Some(img) => {
                         let tile_path = tmx_dir.join(&img.source);
@@ -137,8 +112,6 @@ impl AssetLoader for TiledLoader {
             let asset_map = TiledMap {
                 map,
                 tilemap_textures,
-                #[cfg(not(feature = "atlas"))]
-                tile_image_offsets,
             };
 
             log::info!("Loaded map: {}", load_context.path().display());
@@ -304,13 +277,7 @@ pub fn process_loaded_maps(
                                     };
 
                                 let texture_index = match tilemap_texture {
-                                    TilemapTexture::Single(_) => layer_tile.id(),
-                                    #[cfg(not(feature = "atlas"))]
-                                    TilemapTexture::Vector(_) =>
-                                        *tiled_map.tile_image_offsets.get(&(tileset_index, layer_tile.id()))
-                                        .expect("The offset into to image vector should have been saved during the initial load."),
-                                    #[cfg(not(feature = "atlas"))]
-                                    _ => unreachable!()
+                                    TilemapTexture::Single(_) => layer_tile.id()
                                 };
 
                                 let tile_pos = TilePos { x, y };

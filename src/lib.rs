@@ -31,7 +31,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     },));*/
 
     commands.spawn(SpriteBundle {
-        texture: asset_server.load("public/tiles.png"),
+        texture: asset_server.load("/public/maps/tiles.png"),
         ..default()
     });
 
@@ -53,10 +53,11 @@ pub fn start() {
                 ..default()
             })
             .set(ImagePlugin::default_nearest())
-            /*.set(AssetPlugin {
+            .set(AssetPlugin {
+                asset_folder: "public".to_string(),
                 watch_for_changes: true,
                 ..default()
-            }))*/
+            })
         )
         .add_plugin(TilemapPlugin)
         .add_plugin(helpers::tiled::TiledMapPlugin)
