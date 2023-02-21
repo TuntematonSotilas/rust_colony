@@ -87,10 +87,8 @@ impl AssetLoader for TiledLoader {
             let mut tilemap_textures = HashMap::default();
             
             for (tileset_index, tileset) in map.tilesets().iter().enumerate() {
-                log::info!("tilesets");
                 let tilemap_texture = match &tileset.image {
-                    None => {
-                    
+                    None => {                    
                         log::info!("Skipping image collection tileset '{}' which is incompatible with atlas feature", tileset.name);
                         let asset_path = AssetPath::new(PathBuf::new(), None);
                         let texture: Handle<Image> = load_context.get_handle(asset_path.clone());
