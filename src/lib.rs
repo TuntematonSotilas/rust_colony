@@ -23,9 +23,21 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 // ------ ------
 #[wasm_bindgen(start)]
 pub fn start() {
+
+    let w = web_sys::window().unwrap().inner_width().ok().unwrap().as_f64().unwrap() as f32;
+    let h = web_sys::window().unwrap().inner_height().ok().unwrap().as_f64().unwrap() as f32;
     App::new()
+        .insert_resource(ClearColor(Color::rgb(0., 0., 0.)))
         .add_plugins( DefaultPlugins
             .set(ImagePlugin::default_nearest())
+            .set(WindowPlugin {
+                window: WindowDescriptor { 
+                    width: w,
+                    height: h,
+                    ..default()
+                },
+                ..default()
+            })
         )
         .add_plugin(TilemapPlugin)
         .add_plugin(helpers::tiled::TiledMapPlugin)
