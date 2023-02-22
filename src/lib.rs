@@ -5,6 +5,8 @@ use plugins::{map_plugin::MapPlugin, tiled_plugin::TiledMapPlugin};
 use wasm_bindgen::prelude::*;
 
 mod plugins;
+mod resources;
+mod systems;
 
 fn setup(mut commands: Commands) {
     // 2d camera

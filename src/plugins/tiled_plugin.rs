@@ -127,7 +127,8 @@ impl AssetLoader for TiledLoader {
     clippy::cast_precision_loss,
     clippy::cast_possible_truncation,
     clippy::cast_possible_wrap,
-    clippy::needless_pass_by_value
+    clippy::needless_pass_by_value,
+    clippy::too_many_lines
 )]
 pub fn process_loaded_maps(
     mut commands: Commands,
