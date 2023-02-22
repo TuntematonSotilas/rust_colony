@@ -1,10 +1,8 @@
 use bevy::prelude::*;
 
+use crate::systems::mouse_click::mouse_click;
+
 use super::tiled_plugin::{TiledMap, TiledMapBundle};
-use crate::{
-    resources::cursor_pos::CursorPos,
-    systems::{camera_movement::camera_movement, update_cursor_pos::update_cursor_pos},
-};
 
 pub struct MapPlugin;
 
@@ -20,8 +18,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 impl Plugin for MapPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<CursorPos>()
-            .add_startup_system(setup)
-            .add_system_to_stage(CoreStage::First, update_cursor_pos.after(camera_movement));
+        app.add_startup_system(setup)
+			.add_system(mouse_click);
     }
 }
