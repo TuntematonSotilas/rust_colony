@@ -11,6 +11,7 @@ mod systems;
 fn setup(mut commands: Commands) {
     // 2d camera
     commands.spawn(Camera2dBundle::default());
+
 }
 
 // ------ ------
