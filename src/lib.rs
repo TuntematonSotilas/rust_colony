@@ -1,21 +1,14 @@
 use bevy::prelude::*;
 extern crate wasm_bindgen;
 use bevy_ecs_tilemap::TilemapPlugin;
+use plugins::{map_plugin::MapPlugin, tiled_plugin::TiledMapPlugin};
 use wasm_bindgen::prelude::*;
 
-mod helpers;
+mod plugins;
 
-fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn setup(mut commands: Commands) {
     // 2d camera
     commands.spawn(Camera2dBundle::default());
-    
-    let map_handle: Handle<helpers::tiled::TiledMap> = asset_server.load("/public/maps/map.tmx");
-
-     commands.spawn(helpers::tiled::TiledMapBundle {
-         tiled_map: map_handle,
-         ..Default::default()
-     });
-
 }
 
 // ------ ------
@@ -40,7 +33,8 @@ pub fn start() {
             })
         )
         .add_plugin(TilemapPlugin)
-        .add_plugin(helpers::tiled::TiledMapPlugin)
+        .add_plugin(TiledMapPlugin)
+        .add_plugin(MapPlugin)
         .add_startup_system(setup)
         .run();
 }
