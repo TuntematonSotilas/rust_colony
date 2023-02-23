@@ -1,6 +1,10 @@
 use bevy::{prelude::*, log, math::Vec4Swizzles};
 use bevy_ecs_tilemap::{tiles::{TilePos}, prelude::{TilemapSize, TilemapGridSize, TilemapType}};
 
+use pathfinding::prelude::bfs;
+
+use crate::resources::tiles_pos::{TilesPos, Pos};
+
 pub fn mouse_click(
 	windows: Res<Windows>,
     buttons: Res<Input<MouseButton>>,
@@ -9,8 +13,9 @@ pub fn mouse_click(
         &TilemapSize,
         &TilemapGridSize,
         &TilemapType,
-		&Transform,
+		&Transform
     )>,
+	tiles_pos: Res<TilesPos>,
 ) {
     if buttons.just_released(MouseButton::Left) {
 
@@ -24,6 +29,8 @@ pub fn mouse_click(
 			// assuming there is exactly one main camera entity, so query::single() is OK
 			let (camera, camera_transform) = camera_q.single();
 			
+			let (map_size, grid_size, map_type, map_transform) = tilemap_q.single();
+
 			// check if the cursor is inside the window and get its position
 			if let Some(screen_position) = window.cursor_position() {
 				// check if it is possible to create a ray from screen coordinates to world coordinates
@@ -33,7 +40,6 @@ pub fn mouse_click(
 					
 					log::info!("World coords: {world_position}");
 
-					let (map_size, grid_size, map_type, map_transform) = tilemap_q.single();
 
 
 					let cursor_pos = Vec4::from((world_position, 1.0, 1.0));
@@ -43,13 +49,23 @@ pub fn mouse_click(
 
 					log::info!("cursor_in_map_pos_xy: {cursor_in_map_pos_xy}");
 
-
 					// Once we have a world position we can transform it into a possible tile position.
 					if let Some(tile_pos) = TilePos::from_world_pos(&cursor_in_map_pos_xy, map_size, grid_size, map_type)
 					{
-						let x = tile_pos.x;
-						let y = tile_pos.y;
+						let x = tile_pos.x as i32;
+						let y = tile_pos.y as i32;
 						log::info!("tile_pos: {x}/{y}");
+
+						let goal: Pos = Pos(x, y);
+						let result = bfs(&Pos(1, 1), |_| tiles_pos.pos.clone(), |p| *p == goal);
+						if let Some(result) = result
+						{
+							for r in result {
+								let x = r.0;
+								let y = r.1;
+								log::info!("path: {x}/{y}");
+							}
+						}
 					}
 				}
 			}
