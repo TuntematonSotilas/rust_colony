@@ -1,4 +1,4 @@
-use bevy::{prelude::*, log};
+use bevy::{prelude::*};
 
 pub fn spawn_soliders(mut commands: Commands, asset_server: Res<AssetServer>) {
 

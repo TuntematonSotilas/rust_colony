@@ -16,11 +16,6 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         ..Default::default()
     });
 
-
-	commands.spawn(SpriteBundle {
-        texture: asset_server.load("/public/sprites/soldier.png"),
-        ..default()
-    });
 }
 
 impl Plugin for MapPlugin {
