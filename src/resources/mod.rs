@@ -1,1 +1,1 @@
-pub mod tiles_pos;
+pub mod soldiers;
