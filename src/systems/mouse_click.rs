@@ -42,7 +42,7 @@ pub fn mouse_click(
 				{
 					let x = tile_pos.x as i32;
 					let y = tile_pos.y as i32;
-					log::info!("goal: {x}/{y}");
+					log::info!("-- goal: {x}/{y}");
 
 					let goal: Pos = Pos(x, y);
 					let result = bfs(&Pos(0, 0), |p| p.successors(), |p| *p == goal);
