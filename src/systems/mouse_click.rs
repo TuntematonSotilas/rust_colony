@@ -17,8 +17,8 @@ pub fn mouse_click(
         &TilemapGridSize,
         &TilemapType,
 		&Transform
-    )>,
-	soldier_q: Query<&Soldier>,
+    ), Without<Soldier>>,
+	mut soldier_q: Query<&mut Transform, With<Soldier>>,
 ) {
     if buttons.just_released(MouseButton::Left) 
 		&& !camera_q.is_empty() 
@@ -28,8 +28,8 @@ pub fn mouse_click(
 
 		let window = windows.get_primary().unwrap();
 		
-		let (soldier) = soldier_q.single();
-
+		let mut soldier_transform = soldier_q.single_mut();
+		
 		// get the camera info and transform
 		// assuming there is exactly one main camera entity, so query::single() is OK
 		let (camera, camera_transform) = camera_q.single();
@@ -63,11 +63,13 @@ pub fn mouse_click(
 							log::info!("path: {x}/{y}");
 
 							let world_pos_v3 = Vec3::new(x, y, 1.0);
-							let (camera, camera_transform) = camera_q.single();
 
 							let ndc_pos = camera.world_to_ndc(camera_transform, world_pos_v3).unwrap();
 							
-							//soldier.transform.transform_point(ndc_pos);
+							//soldier_transform.transform_point(ndc_pos);
+							log::info!(ndc_pos.x);
+
+							soldier_transform.translation = ndc_pos;
 						}
 					}
 				}
