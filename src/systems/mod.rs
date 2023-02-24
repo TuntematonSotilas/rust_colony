@@ -1,2 +1,3 @@
 pub mod mouse_click;
-pub mod spawn_soliders;
+pub mod soldier_spawn;
+pub mod soldier_move;

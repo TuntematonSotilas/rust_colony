@@ -1,1 +1,1 @@
-pub mod soldiers;
+pub mod soldiers_state;
