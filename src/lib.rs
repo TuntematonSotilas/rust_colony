@@ -7,6 +7,7 @@ use wasm_bindgen::prelude::*;
 mod plugins;
 mod systems;
 mod resources;
+mod components;
 
 fn setup(mut commands: Commands) {
     // 2d camera

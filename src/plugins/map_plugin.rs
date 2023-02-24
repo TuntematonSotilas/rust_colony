@@ -2,7 +2,7 @@ use bevy::{prelude::*};
 
 use crate::resources::soldiers::Soldiers;
 use crate::{systems::mouse_click::mouse_click};
-use crate::systems::soldier_sys::spawn_soliders;
+use crate::systems::spawn_soliders::spawn_soliders;
 
 use super::tiled_plugin::{TiledMap, TiledMapBundle};
 

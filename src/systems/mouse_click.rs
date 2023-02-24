@@ -3,6 +3,8 @@ use bevy_ecs_tilemap::{tiles::{TilePos}, prelude::{TilemapSize, TilemapGridSize,
 
 use pathfinding::prelude::bfs;
 
+use crate::components::soldier::Soldier;
+
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 struct Pos(i32, i32);
 
@@ -16,10 +18,17 @@ pub fn mouse_click(
         &TilemapType,
 		&Transform
     )>,
+	soldier_q: Query<&Soldier>,
 ) {
-    if buttons.just_released(MouseButton::Left) {
+    if buttons.just_released(MouseButton::Left) 
+		&& !camera_q.is_empty() 
+		&& !tilemap_q.is_empty()
+		&& !soldier_q.is_empty()
+		{
 
 		let window = windows.get_primary().unwrap();
+		
+		let (soldier) = soldier_q.single();
 
 		// get the camera info and transform
 		// assuming there is exactly one main camera entity, so query::single() is OK
@@ -49,9 +58,16 @@ pub fn mouse_click(
 					if let Some(result) = result
 					{
 						for r in result {
-							let x = r.0;
-							let y = r.1;
+							let x = r.0 as f32;
+							let y = r.1 as f32;
 							log::info!("path: {x}/{y}");
+
+							let world_pos_v3 = Vec3::new(x, y, 1.0);
+							let (camera, camera_transform) = camera_q.single();
+
+							let ndc_pos = camera.world_to_ndc(camera_transform, world_pos_v3).unwrap();
+							
+							//soldier.transform.transform_point(ndc_pos);
 						}
 					}
 				}

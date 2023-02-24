@@ -2,6 +2,7 @@ use bevy::{prelude::*, log};
 use bevy_ecs_tilemap::{tiles::{TileStorage, TilePos}, prelude::{TilemapGridSize, TilemapSize, TilemapType}};
 
 use crate::resources::{soldiers::Soldiers};
+use crate::components::{soldier::Soldier};
 
 pub fn spawn_soliders(
 	mut commands: Commands, 
@@ -34,14 +35,17 @@ pub fn spawn_soliders(
 		log::info!(ndc_pos.x);
 		log::info!(ndc_pos.y);
 
-		commands.spawn(SpriteBundle {
-			texture: asset_server.load("/public/sprites/soldier.png"),
-			transform: Transform {
-				translation: Vec3::new(ndc_pos.x, ndc_pos.y, 10.),
+		commands.spawn((
+			Soldier,
+			SpriteBundle {
+				texture: asset_server.load("/public/sprites/soldier.png"),
+				transform: Transform {
+					translation: Vec3::new(ndc_pos.x, ndc_pos.y, 10.),
+					..default()
+				},
 				..default()
-			},
-			..default()
-		});
+			}
+		));
 		soldiers.set = true;
 	}
 	
