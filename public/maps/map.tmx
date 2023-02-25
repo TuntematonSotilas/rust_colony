@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="mars" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="mars.png" width="64" height="32"/>
+  <image source="debug.png" width="64" height="32"/>
  </tileset>
  <layer id="1" name="Calque de Tuiles 1" width="20" height="20">
   <data encoding="csv">

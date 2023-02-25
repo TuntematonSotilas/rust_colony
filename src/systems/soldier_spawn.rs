@@ -1,4 +1,4 @@
-use bevy::{prelude::*, log};
+use bevy::{prelude::*};
 use bevy_ecs_tilemap::{tiles::TilePos, prelude::{TilemapGridSize, TilemapType}};
 
 use crate::{resources::{soldiers_state::SoldiersState}, components::soldier::SoldierPos};
@@ -22,19 +22,17 @@ pub fn soldier_spawn(
 			x: 10,
 			y: 10
 		};
-		
-		
+				
 		let tile_center = tile_pos.center_in_world(grid_size, map_type).extend(1.0);
         let transform = *map_transform * Transform::from_translation(tile_center);
 
-		let w_x = transform.translation.x;
-		let w_y = transform.translation.y;
-		
-		log::info!("world_pos: {w_x}/{w_y}");
-
-
 		commands.spawn((
-			Soldier { path: Vec::new(), move_done: true, current_path: 1, current_pos: SoldierPos(10, 10) },
+			Soldier { 
+				path: Vec::new(), 
+				move_done: true, 
+				current_path: 1, 
+				current_pos: SoldierPos(10, 10),
+			},
 			SpriteBundle {
 				texture: asset_server.load("/public/sprites/soldier.png"),
 				transform,

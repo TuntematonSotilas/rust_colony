@@ -39,12 +39,6 @@ pub fn mouse_click(
 			if let Some(ray) = camera.viewport_to_world(camera_transform, screen_position) {
 				// get 2d world mouse coordinates from the ray
 				let world_position: Vec2 = ray.origin.truncate();
-
-				let w_x = world_position.x;
-				let w_y = world_position.y;
-
-				log::info!("clic_world_positio: {w_x}/{w_y}");
-
 				let cursor_pos = Vec4::from((world_position, 1.0, 1.0));
 				let cursor_in_map_pos = map_transform.compute_matrix().inverse() * cursor_pos;
 				let cursor_in_map_pos_xy = cursor_in_map_pos.xy();
@@ -52,11 +46,12 @@ pub fn mouse_click(
 				// Once we have a world position we can transform it into a possible tile position.
 				if let Some(tile_pos) = TilePos::from_world_pos(&cursor_in_map_pos_xy, map_size, grid_size, map_type)
 				{
-					let x = tile_pos.x;
-					let y = tile_pos.y;
-					log::info!("-- goal: {x}/{y}");
 
-					let goal = SoldierPos(x, y);
+					let goal = SoldierPos(tile_pos.x, tile_pos.y);
+
+					log::info!("goal: {}/{}", goal.0, goal.1);
+					//log::info!("soldier.current_pos: {}/{}", soldier.current_pos.0, soldier.current_pos.1);
+
 					let result = bfs(&soldier.current_pos, |p| p.successors(), |p| *p == goal);
 					if let Some(result) = result
 					{
