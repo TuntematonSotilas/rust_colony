@@ -57,6 +57,7 @@ pub fn mouse_click(
 					{
 						soldier.path = result.clone();
 						soldier.move_done = false;
+						soldier.click = true;
 						soldier.current_path = 1;
 
 						for r in result {

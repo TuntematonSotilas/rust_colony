@@ -1,10 +1,19 @@
+use std::time::Duration;
+
 use bevy::{prelude::*, log};
 use bevy_ecs_tilemap::{prelude::{TilemapGridSize, TilemapType}, tiles::TilePos};
+use bevy::time::Stopwatch;
 
 use crate::components::soldier::{Soldier, SoldierPos};
 
+#[derive(Component)]
+pub struct MyTimer {
+    pub time: Stopwatch,
+}
+
 pub fn soldier_move(
 	time: Res<Time>,
+	mut q_timer: Query<&mut MyTimer, With<Soldier>>,
 	mut soldier_q: Query<&mut Soldier>,
 	mut soldier_transform_q: Query<&mut Transform, With<Soldier>>,
 	tilemap_q: Query<(
@@ -16,9 +25,22 @@ pub fn soldier_move(
 		&& !soldier_transform_q.is_empty()
 		&& !tilemap_q.is_empty()
 	{
+
+		
 		let mut soldier = soldier_q.single_mut();
 
 		if !soldier.move_done && soldier.path.len() > 1 {
+			
+			let mut timer = q_timer.single_mut();
+			if soldier.click {
+				log::info!("unpause");
+				timer.time.reset();	
+
+				timer.time.tick(time.delta());
+				//timer.time.tick(Duration::from_millis(20));
+
+				soldier.click = false;
+			}
 
 			let (map_transform, grid_size, map_type) = tilemap_q.single();
 
@@ -35,8 +57,9 @@ pub fn soldier_move(
 			
 			log::info!("dest_trsf.translation: {}/{}", dest_trsf.translation.x, dest_trsf.translation.y);
 			
-			let delta_x = dest_trsf.translation.x * time.delta_seconds() * 2.;
-			let delta_y = dest_trsf.translation.y * time.delta_seconds() * 2.;			
+			let delta_x = dest_trsf.translation.x * timer.time.elapsed_secs();
+			let delta_y = dest_trsf.translation.y * timer.time.elapsed_secs();	
+
 			log::info!("delta: {delta_x}/{delta_y}");
 
 			let mut soldier_transform = soldier_transform_q.single_mut();
@@ -46,10 +69,8 @@ pub fn soldier_move(
 			
 			log::info!("soldier_transform: {}/{}", soldier_transform.translation.x, soldier_transform.translation.y);
 
-			if ((delta_x >= 0. && soldier_transform.translation.x >= dest_trsf.translation.x) ||
-					(delta_x < 0. && soldier_transform.translation.x <= dest_trsf.translation.x)) &&
-			   ((delta_y >= 0. && soldier_transform.translation.y >= dest_trsf.translation.y) ||
-					(delta_y < 0. && soldier_transform.translation.y <= dest_trsf.translation.y)) {
+			if soldier_transform.translation.x.floor() == dest_trsf.translation.x &&
+				soldier_transform.translation.y.floor() == dest_trsf.translation.y {
 					log::info!("next move");
 					soldier.current_path += 1;
 			}

@@ -1,8 +1,10 @@
-use bevy::{prelude::*};
+use bevy::{prelude::*, time::Stopwatch};
 use bevy_ecs_tilemap::{tiles::TilePos, prelude::{TilemapGridSize, TilemapType}};
 
 use crate::{resources::{soldiers_state::SoldiersState}, components::soldier::SoldierPos};
 use crate::components::{soldier::Soldier};
+
+use super::soldier_move::MyTimer;
 
 pub fn soldier_spawn(
 	mut commands: Commands, 
@@ -30,13 +32,17 @@ pub fn soldier_spawn(
 			Soldier { 
 				path: Vec::new(), 
 				move_done: true, 
-				current_path: 1, 
+				current_path: 1,
 				current_pos: SoldierPos(10, 10),
+				click: false,
 			},
 			SpriteBundle {
 				texture: asset_server.load("/public/sprites/soldier.png"),
 				transform,
 				..default()
+			},
+			MyTimer {
+				time: Stopwatch::new()
 			}
 		));
 		soldiers_state.spawn_done = true;

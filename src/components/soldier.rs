@@ -7,6 +7,7 @@ pub struct Soldier
 	pub move_done: bool,
 	pub current_path: usize,
 	pub current_pos: SoldierPos,
+	pub click: bool,
 }
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
