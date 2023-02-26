@@ -34,7 +34,6 @@ pub fn soldier_spawn(
 				move_done: true, 
 				current_path: 1,
 				current_pos: SoldierPos(10, 10),
-				click: false,
 			},
 			SpriteBundle {
 				texture: asset_server.load("/public/sprites/soldier.png"),

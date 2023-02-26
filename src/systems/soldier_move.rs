@@ -1,5 +1,3 @@
-use std::time::Duration;
-
 use bevy::{prelude::*, log};
 use bevy_ecs_tilemap::{prelude::{TilemapGridSize, TilemapType}, tiles::TilePos};
 use bevy::time::Stopwatch;
@@ -13,7 +11,6 @@ pub struct MyTimer {
 
 pub fn soldier_move(
 	time: Res<Time>,
-	mut q_timer: Query<&mut MyTimer, With<Soldier>>,
 	mut soldier_q: Query<&mut Soldier>,
 	mut soldier_transform_q: Query<&mut Transform, With<Soldier>>,
 	tilemap_q: Query<(
@@ -25,29 +22,27 @@ pub fn soldier_move(
 		&& !soldier_transform_q.is_empty()
 		&& !tilemap_q.is_empty()
 	{
-
-		
 		let mut soldier = soldier_q.single_mut();
 
 		if !soldier.move_done && soldier.path.len() > 1 {
 			
-			let mut timer = q_timer.single_mut();
-			if soldier.click {
-				log::info!("unpause");
-				timer.time.reset();	
-
-				timer.time.tick(time.delta());
-				//timer.time.tick(Duration::from_millis(20));
-
-				soldier.click = false;
-			}
-
 			let (map_transform, grid_size, map_type) = tilemap_q.single();
 
 			log::info!("current_path : {}", soldier.current_path );
 
+			let old_pos = TilePos {
+				x: soldier.path[soldier.current_path - 1].0,
+				y: soldier.path[soldier.current_path - 1].1,
+			};
+
+			let tile_origin_center = old_pos.center_in_world(grid_size, map_type).extend(1.0);
+			let origin_trsf = *map_transform * Transform::from_translation(tile_origin_center);
+			
+			log::info!("origin_trsf.translation: {}/{}", origin_trsf.translation.x, origin_trsf.translation.y);
+
+
 			let next_pos = TilePos {
-				x: soldier.path.get(soldier.current_path).unwrap().0,
+				x: soldier.path[soldier.current_path].0,
 				y: soldier.path[soldier.current_path].1
 			};
 			
@@ -55,10 +50,13 @@ pub fn soldier_move(
 			let tile_dest_center = next_pos.center_in_world(grid_size, map_type).extend(1.0);
 			let dest_trsf = *map_transform * Transform::from_translation(tile_dest_center);
 			
+			
 			log::info!("dest_trsf.translation: {}/{}", dest_trsf.translation.x, dest_trsf.translation.y);
 			
-			let delta_x = dest_trsf.translation.x * timer.time.elapsed_secs();
-			let delta_y = dest_trsf.translation.y * timer.time.elapsed_secs();	
+			log::info!("time: {}", time.delta_seconds());
+
+			let delta_x = (dest_trsf.translation.x - origin_trsf.translation.x) * time.delta_seconds();
+			let delta_y = (dest_trsf.translation.y - origin_trsf.translation.y) * time.delta_seconds();	
 
 			log::info!("delta: {delta_x}/{delta_y}");
 
@@ -78,7 +76,9 @@ pub fn soldier_move(
 			if soldier.current_path == soldier.path.len() {
 				log::info!("move_done");
 				soldier.move_done = true;
+				
 				soldier.current_pos = SoldierPos(next_pos.x, next_pos.y);
+
 
 			}
 			

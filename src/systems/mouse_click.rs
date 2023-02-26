@@ -55,9 +55,9 @@ pub fn mouse_click(
 					let result = bfs(&soldier.current_pos, |p| p.successors(), |p| *p == goal);
 					if let Some(result) = result
 					{
+
 						soldier.path = result.clone();
 						soldier.move_done = false;
-						soldier.click = true;
 						soldier.current_path = 1;
 
 						for r in result {
