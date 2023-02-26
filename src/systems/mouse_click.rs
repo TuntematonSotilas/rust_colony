@@ -58,7 +58,7 @@ pub fn mouse_click(
 
 						soldier.path = result.clone();
 						soldier.move_done = false;
-						soldier.current_path = 1;
+						soldier.current_tile = 0;
 
 						for r in result {
 							let x = r.0;

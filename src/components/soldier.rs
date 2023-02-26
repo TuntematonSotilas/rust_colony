@@ -5,7 +5,7 @@ pub struct Soldier
 {
 	pub path: Vec<SoldierPos>,
 	pub move_done: bool,
-	pub current_path: usize,
+	pub current_tile: usize,
 	pub current_pos: SoldierPos,
 }
 

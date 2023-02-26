@@ -109,7 +109,7 @@ impl AssetLoader for TiledLoader {
                 tilemap_textures,
             };
 
-            log::info!("Loaded map: {}", load_context.path().display());
+            //log::info!("Loaded map: {}", load_context.path().display());
 
             let loaded_asset = LoadedAsset::new(asset_map);
             load_context.set_default_asset(loaded_asset.with_dependencies(dependencies));
@@ -142,7 +142,7 @@ pub fn process_loaded_maps(
     for event in map_events.iter() {
         match event {
             AssetEvent::Created { handle } => {
-                log::info!("Map added!");
+                //log::info!("Map added!");
                 changed_maps.push(handle.clone());
             }
             AssetEvent::Modified { handle } => {

@@ -4,6 +4,8 @@ name = "rust_colony"
 license = "MIT"
 readme = "./README.md"
 edition = "2021"
+description = "A Dark Colony Web Clone"
+repository = "https://github.com/TuntematonSotilas/rust_colony"
 
 [lib]
 crate-type = ["cdylib"]

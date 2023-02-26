@@ -32,7 +32,7 @@ pub fn soldier_spawn(
 			Soldier { 
 				path: Vec::new(), 
 				move_done: true, 
-				current_path: 1,
+				current_tile: 0,
 				current_pos: SoldierPos(10, 10),
 			},
 			SpriteBundle {
