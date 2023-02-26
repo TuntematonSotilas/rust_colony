@@ -45,8 +45,8 @@ pub fn soldier_move(
 			let dest_trsf = *map_transform * Transform::from_translation(tile_dest_center);
 			
 			// Get delta from timer
-			let delta_x = (dest_trsf.translation.x - origin_trsf.translation.x) * time.delta_seconds();
-			let delta_y = (dest_trsf.translation.y - origin_trsf.translation.y) * time.delta_seconds();	
+			let delta_x = (dest_trsf.translation.x - origin_trsf.translation.x) * time.delta_seconds() * 2.;
+			let delta_y = (dest_trsf.translation.y - origin_trsf.translation.y) * time.delta_seconds() * 2.;	
 
 			// Set the position
 			let mut soldier_transform = soldier_transform_q.single_mut();
