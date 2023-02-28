@@ -15,6 +15,7 @@ pub fn soldier_spawn(
     asset_server: Res<AssetServer>,
     tilemap_q: Query<(&Transform, &TilemapGridSize, &TilemapType)>,
     mut soldiers_state: ResMut<SoldiersState>,
+	mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
     if !tilemap_q.is_empty() && !soldiers_state.spawn_done {
         let (map_transform, grid_size, map_type) = tilemap_q.single();
@@ -24,6 +25,13 @@ pub fn soldier_spawn(
         let tile_center = tile_pos.center_in_world(grid_size, map_type).extend(1.0);
         let transform = *map_transform * Transform::from_translation(tile_center);
 
+		let texture_handle = asset_server.load("/public/sprites/soldier.png");
+    	let texture_atlas = TextureAtlas::from_grid(
+			texture_handle, 
+			Vec2::new(45.0, 45.0), 
+			4, 1, None, None);
+		let texture_atlas_handle = texture_atlases.add(texture_atlas);
+
         commands.spawn((
             Soldier {
                 path: Vec::new(),
@@ -32,8 +40,8 @@ pub fn soldier_spawn(
                 current_pos: Vec2::new(0., 0.),
 				init_pos: Some(tile_pos)
             },
-            SpriteBundle {
-                texture: asset_server.load("/public/sprites/soldier.png"),
+            SpriteSheetBundle {
+				texture_atlas: texture_atlas_handle,
                 transform,
                 ..default()
             },
