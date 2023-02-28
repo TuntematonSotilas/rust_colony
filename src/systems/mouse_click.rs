@@ -45,17 +45,38 @@ pub fn mouse_click(
                 if let Some(tile_pos) =
                     TilePos::from_world_pos(&cursor_in_map_pos_xy, map_size, grid_size, map_type)
                 {
-                    let goal = Pos(tile_pos.x, tile_pos.y);
+                    
+					let mut solider_pos: TilePos = TilePos { x: 0, y: 0 };
+					if let Some(init_pos) = soldier.init_pos {
+						log::info!("init");
+						solider_pos = init_pos;
+						soldier.init_pos = None;
+					} else {
+						
+						let sol_pos = Vec4::from((soldier.current_pos, 1.0, 1.0));
+						let sol_in_map_pos = map_transform.compute_matrix().inverse() * sol_pos;
+						let sol_in_map_pos_xy = sol_in_map_pos.xy();
+
+						if let Some(pos) = TilePos::from_world_pos(&sol_in_map_pos_xy, map_size, grid_size, map_type)
+						{
+							log::info!("current_pos {}/{}", pos.x, pos.y);
+							solider_pos = pos
+						}
+					}
+					
+					let goal = Pos(tile_pos.x, tile_pos.y);
 
                     log::info!("goal: {}/{}", goal.0, goal.1);
                     //log::info!("soldier.current_pos: {}/{}", soldier.current_pos.0, soldier.current_pos.1);
 
-                    let result = bfs(&soldier.current_pos, |p| p.successors(), |p| *p == goal);
-                    if let Some(result) = result {
-                        soldier.path = result.clone();
-                        soldier.move_done = false;
-                        soldier.current_tile = 0;
-                    }
+
+					let pos = Pos(solider_pos.x, solider_pos.y);
+					let result = bfs(&pos, |p| p.successors(), |p| *p == goal);
+					if let Some(result) = result {
+						soldier.path = result.clone();
+						soldier.move_done = false;
+						soldier.current_tile = 0;
+					}
                 }
             }
         }

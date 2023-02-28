@@ -5,7 +5,7 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::components::soldier::{Pos, Soldier};
+use crate::components::soldier::Soldier;
 
 const SPEED: f32 = 2.;
 
@@ -53,10 +53,10 @@ pub fn soldier_move(
             let mut soldier_transform = soldier_transform_q.single_mut();
             soldier_transform.translation.x += delta_x;
             soldier_transform.translation.y += delta_y;
+			soldier.current_pos = Vec2::new(soldier_transform.translation.x, soldier_transform.translation.y);
 
             // Go to next tile when destination reached
             let error_margin = 2.;
-            
             if (soldier_transform.translation.x.floor() - dest_trsf.translation.x).abs() < error_margin &&
             (soldier_transform.translation.y.floor() - dest_trsf.translation.y).abs() < error_margin {
                 log::info!("next tile");
@@ -67,7 +67,6 @@ pub fn soldier_move(
             if soldier.current_tile + 1 == soldier.path.len() {
                 log::info!("move_done");
                 soldier.move_done = true;
-                soldier.current_pos = Pos(dest_pos.x, dest_pos.y);
             }
         }
     }

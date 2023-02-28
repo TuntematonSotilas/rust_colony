@@ -5,7 +5,7 @@ use bevy_ecs_tilemap::{
 };
 
 use crate::components::soldier::Soldier;
-use crate::{components::soldier::Pos, resources::soldiers_state::SoldiersState};
+use crate::{resources::soldiers_state::SoldiersState};
 
 use super::soldier_move::MyTimer;
 
@@ -29,7 +29,8 @@ pub fn soldier_spawn(
                 path: Vec::new(),
                 move_done: true,
                 current_tile: 0,
-                current_pos: Pos(10, 10),
+                current_pos: Vec2::new(0., 0.),
+				init_pos: Some(tile_pos)
             },
             SpriteBundle {
                 texture: asset_server.load("/public/sprites/soldier.png"),

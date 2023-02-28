@@ -1,11 +1,13 @@
 use bevy::prelude::*;
+use bevy_ecs_tilemap::tiles::TilePos;
 
 #[derive(Component)]
 pub struct Soldier {
     pub path: Vec<Pos>,
     pub move_done: bool,
     pub current_tile: usize,
-    pub current_pos: Pos,
+    pub current_pos: Vec2,
+	pub init_pos: Option<TilePos>,
 }
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
