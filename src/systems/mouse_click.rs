@@ -50,21 +50,11 @@ pub fn mouse_click(
                     log::info!("goal: {}/{}", goal.0, goal.1);
                     //log::info!("soldier.current_pos: {}/{}", soldier.current_pos.0, soldier.current_pos.1);
 
-                    let result = bfs(
-                        &soldier.current_pos,
-                        |p| p.successors(),
-                        |p| *p == goal,
-                    );
+                    let result = bfs(&soldier.current_pos, |p| p.successors(), |p| *p == goal);
                     if let Some(result) = result {
                         soldier.path = result.clone();
                         soldier.move_done = false;
                         soldier.current_tile = 0;
-
-                        for r in result {
-                            let x = r.0;
-                            let y = r.1;
-                            log::info!("path: {x}/{y}");
-                        }
                     }
                 }
             }

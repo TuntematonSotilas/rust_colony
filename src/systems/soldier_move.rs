@@ -7,6 +7,8 @@ use bevy_ecs_tilemap::{
 
 use crate::components::soldier::{Pos, Soldier};
 
+const SPEED: f32 = 2.;
+
 #[derive(Component)]
 pub struct MyTimer {
     pub time: Stopwatch,
@@ -43,9 +45,9 @@ pub fn soldier_move(
 
             // Get delta from timer
             let delta_x =
-                (dest_trsf.translation.x - origin_trsf.translation.x) * time.delta_seconds();
+                (dest_trsf.translation.x - origin_trsf.translation.x) * time.delta_seconds() * SPEED;
             let delta_y =
-                (dest_trsf.translation.y - origin_trsf.translation.y) * time.delta_seconds();
+                (dest_trsf.translation.y - origin_trsf.translation.y) * time.delta_seconds() * SPEED;
 
             // Set the position
             let mut soldier_transform = soldier_transform_q.single_mut();
@@ -53,9 +55,10 @@ pub fn soldier_move(
             soldier_transform.translation.y += delta_y;
 
             // Go to next tile when destination reached
-            if soldier_transform.translation.x.floor() == dest_trsf.translation.x &&
-                soldier_transform.translation.y.floor() == dest_trsf.translation.y
-            {
+            let error_margin = 2.;
+            
+            if (soldier_transform.translation.x.floor() - dest_trsf.translation.x).abs() < error_margin &&
+            (soldier_transform.translation.y.floor() - dest_trsf.translation.y).abs() < error_margin {
                 log::info!("next tile");
                 soldier.current_tile += 1;
             }
