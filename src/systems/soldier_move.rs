@@ -57,8 +57,12 @@ pub fn soldier_move(
 
             // Go to next tile when destination reached
             let error_margin = 2.;
-            if (soldier_transform.translation.x.floor() - dest_trsf.translation.x).abs() < error_margin &&
-            (soldier_transform.translation.y.floor() - dest_trsf.translation.y).abs() < error_margin {
+			let rest_x = (soldier_transform.translation.x.floor() - dest_trsf.translation.x).abs();
+			let rest_y = (soldier_transform.translation.y.floor() - dest_trsf.translation.y).abs();
+			
+			//log::info!("rest: {rest_x}/{rest_y}");
+
+            if rest_x < error_margin && rest_y < error_margin {
                 log::info!("next tile");
                 soldier.current_tile += 1;
             }
