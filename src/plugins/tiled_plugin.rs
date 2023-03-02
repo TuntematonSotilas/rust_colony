@@ -88,7 +88,7 @@ impl AssetLoader for TiledLoader {
             for (tileset_index, tileset) in map.tilesets().iter().enumerate() {
                 let tilemap_texture = match &tileset.image {
                     None => {
-                        log::info!("Skipping image collection tileset '{}' which is incompatible with atlas feature", tileset.name);
+                        // Skipping image collection tileset which is incompatible with atlas feature
                         continue;
                     }
                     Some(img) => {
@@ -108,8 +108,6 @@ impl AssetLoader for TiledLoader {
                 map,
                 tilemap_textures,
             };
-
-            //log::info!("Loaded map: {}", load_context.path().display());
 
             let loaded_asset = LoadedAsset::new(asset_map);
             load_context.set_default_asset(loaded_asset.with_dependencies(dependencies));
@@ -142,15 +140,15 @@ pub fn process_loaded_maps(
     for event in map_events.iter() {
         match event {
             AssetEvent::Created { handle } => {
-                //log::info!("Map added!");
+                // Map added
                 changed_maps.push(handle.clone());
             }
             AssetEvent::Modified { handle } => {
-                log::info!("Map changed!");
+                // Map changed
                 changed_maps.push(handle.clone());
             }
             AssetEvent::Removed { handle } => {
-                log::info!("Map removed!");
+                // Map removed!
                 // if mesh was modified and removed in the same update, ignore the modification
                 // events are ordered so future modification events are ok
                 changed_maps.retain(|changed_handle| changed_handle == handle);
@@ -209,18 +207,12 @@ pub fn process_loaded_maps(
                         let offset_y = layer.offset_y;
 
                         let tiled::LayerType::TileLayer(tile_layer) = layer.layer_type() else {
-                            log::info!(
-                                "Skipping layer {} because only tile layers are supported.",
-                                layer.id()
-                            );
+                            // Skipping layer because only tile layers are supported
                             continue;
                         };
 
                         let tiled::TileLayer::Finite(layer_data) = tile_layer else {
-                            log::info!(
-                                "Skipping layer {} because only finite layers are supported.",
-                                layer.id()
-                            );
+                            // Skipping layer because only finite layers are supported
                             continue;
                         };
 

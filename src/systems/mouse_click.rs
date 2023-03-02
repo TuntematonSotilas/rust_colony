@@ -1,4 +1,4 @@
-use bevy::{log, math::Vec4Swizzles, prelude::*};
+use bevy::{math::Vec4Swizzles, prelude::*};
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapSize, TilemapType},
     tiles::TilePos,
@@ -50,7 +50,6 @@ pub fn mouse_click(
                     
 					let mut solider_pos: TilePos = TilePos { x: 10, y: 10 };
 					if let Some(init_pos) = soldier.init_pos {
-						log::info!("init");
 						solider_pos = init_pos;
 						soldier.init_pos = None;
 					} else {
@@ -64,8 +63,6 @@ pub fn mouse_click(
 						{
 							solider_pos = pos;
 
-							log::info!("current_pos {}/{}", pos.x, pos.y);
-
 							//re-center the soldier on the tile
 							let tile_center = pos.center_in_world(grid_size, map_type).extend(1.0);
         					let transform = *map_transform * Transform::from_translation(tile_center);
@@ -77,11 +74,6 @@ pub fn mouse_click(
 					}
 					
 					let goal = Pos(tile_pos.x, tile_pos.y);
-
-                    log::info!("goal: {}/{}", goal.0, goal.1);
-                    //log::info!("soldier.current_pos: {}/{}", soldier.current_pos.0, soldier.current_pos.1);
-
-
 					let pos = Pos(solider_pos.x, solider_pos.y);
 					let result = bfs(&pos, |p| p.successors(), |p| *p == goal);
 					if let Some(result) = result {
