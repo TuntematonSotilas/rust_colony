@@ -91,10 +91,23 @@ pub fn mouse_click(
                     }
 
                     // Set direction
-                    if goal.0 > pos.0 {
+					if goal.1 < pos.1 {
+                        soldier_sprite.index = 0;
+                        log::info!("bott");
+                    }
+                    if goal.1 > pos.1 {
                         soldier_sprite.index = 1;
+                        log::info!("top");
+                    }
+					if goal.0 < pos.0 {
+                        soldier_sprite.index = 2;
+                        log::info!("left");
+                    }
+					if goal.0 > pos.0 {
+                        soldier_sprite.index = 3;
                         log::info!("right");
                     }
+					
                 }
             }
         }
