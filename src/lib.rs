@@ -8,6 +8,7 @@ mod components;
 mod plugins;
 mod resources;
 mod systems;
+mod utils;
 
 fn setup(mut commands: Commands) {
     // 2d camera

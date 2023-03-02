@@ -5,7 +5,7 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::components::soldier::Soldier;
+use crate::{components::soldier::Soldier, utils::pos_util::tile_to_world};
 
 const SPEED: f32 = 2.;
 const ERROR_MARGIN: f32 = 2.;
@@ -29,26 +29,23 @@ pub fn soldier_move(
             let (map_transform, grid_size, map_type) = tilemap_q.single();
 
             // Get origin
-            let origin_pos = TilePos {
+            let origin_tile = TilePos {
                 x: soldier.path[soldier.current_tile].0,
                 y: soldier.path[soldier.current_tile].1,
             };
-            let tile_origin_center = origin_pos.center_in_world(grid_size, map_type).extend(1.0);
-            let origin_trsf = *map_transform * Transform::from_translation(tile_origin_center);
-
+            let origin = tile_to_world(origin_tile, grid_size, map_type, map_transform);
             // Get destination
-            let dest_pos = TilePos {
+            let dest_tile = TilePos {
                 x: soldier.path[soldier.current_tile + 1].0,
                 y: soldier.path[soldier.current_tile + 1].1,
             };
-            let tile_dest_center = dest_pos.center_in_world(grid_size, map_type).extend(1.0);
-            let dest_trsf = *map_transform * Transform::from_translation(tile_dest_center);
+            let dest = tile_to_world(dest_tile, grid_size, map_type, map_transform);
 
             // Get delta from timer
             let delta_x =
-                (dest_trsf.translation.x - origin_trsf.translation.x) * time.delta_seconds() * SPEED;
+                (dest.x - origin.x) * time.delta_seconds() * SPEED;
             let delta_y =
-                (dest_trsf.translation.y - origin_trsf.translation.y) * time.delta_seconds() * SPEED;
+                (dest.y - origin.y) * time.delta_seconds() * SPEED;
 
             // Set the position
             let mut soldier_transform = soldier_transform_q.single_mut();
@@ -57,8 +54,8 @@ pub fn soldier_move(
 			soldier.current_pos = Vec2::new(soldier_transform.translation.x, soldier_transform.translation.y);
 
             // Go to next tile when destination reached
-			let rest_x = (soldier_transform.translation.x.floor() - dest_trsf.translation.x).abs();
-			let rest_y = (soldier_transform.translation.y.floor() - dest_trsf.translation.y).abs();
+			let rest_x = (soldier_transform.translation.x.floor() - dest.x).abs();
+			let rest_y = (soldier_transform.translation.y.floor() - dest.y).abs();
 
             if rest_x < ERROR_MARGIN && rest_y < ERROR_MARGIN {
                 soldier.current_tile += 1;
