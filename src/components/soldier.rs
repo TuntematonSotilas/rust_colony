@@ -7,7 +7,7 @@ pub struct Soldier {
     pub move_done: bool,
     pub current_tile: usize,
     pub current_pos: Vec2,
-	pub init_pos: Option<TilePos>,
+    pub init_pos: Option<TilePos>,
 }
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]

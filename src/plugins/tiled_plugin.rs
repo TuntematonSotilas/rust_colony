@@ -139,12 +139,8 @@ pub fn process_loaded_maps(
     let mut changed_maps = Vec::<Handle<TiledMap>>::default();
     for event in map_events.iter() {
         match event {
-            AssetEvent::Created { handle } => {
-                // Map added
-                changed_maps.push(handle.clone());
-            }
-            AssetEvent::Modified { handle } => {
-                // Map changed
+            AssetEvent::Created { handle } | AssetEvent::Modified { handle } => {
+                // Map added or changed
                 changed_maps.push(handle.clone());
             }
             AssetEvent::Removed { handle } => {
