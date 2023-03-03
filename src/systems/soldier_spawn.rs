@@ -5,7 +5,7 @@ use bevy_ecs_tilemap::{
 };
 
 use crate::resources::soldiers_state::SoldiersState;
-use crate::{components::soldier::Soldier, utils::pos_util::tile_to_world};
+use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
 use super::soldier_move::MyTimer;
 
@@ -35,6 +35,7 @@ pub fn soldier_spawn(
                 current_tile: 0,
                 current_pos: Vec2::new(0., 0.),
                 init_pos: Some(tile_pos),
+				dir_set: false,
             },
             SpriteSheetBundle {
                 texture_atlas: texture_atlas_handle,

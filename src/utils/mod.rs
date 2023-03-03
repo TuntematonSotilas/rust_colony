@@ -1,1 +1,2 @@
-pub mod pos_util;
+pub mod position;
+pub mod sprite;
