@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy::time::Stopwatch;
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapType},
     tiles::TilePos,
@@ -9,11 +8,6 @@ use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
 const SPEED: f32 = 2.;
 const ERROR_MARGIN: f32 = 2.;
-
-#[derive(Component)]
-pub struct MyTimer {
-    pub time: Stopwatch,
-}
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn soldier_move(

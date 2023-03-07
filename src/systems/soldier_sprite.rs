@@ -1,14 +1,8 @@
-use bevy::time::Stopwatch;
 use bevy::{log, prelude::*};
 use bevy_ecs_tilemap::tiles::TilePos;
 
 use crate::components::soldier::Soldier;
 use crate::utils::sprite::get_sprite_index;
-
-#[derive(Component)]
-pub struct MyTimer {
-    pub time: Stopwatch,
-}
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn soldier_sprite(

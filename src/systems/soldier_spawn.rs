@@ -1,4 +1,4 @@
-use bevy::{log, prelude::*, time::Stopwatch};
+use bevy::{log, prelude::*};
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapType},
     tiles::TilePos,
@@ -6,8 +6,6 @@ use bevy_ecs_tilemap::{
 
 use crate::resources::soldiers_state::SoldiersState;
 use crate::{components::soldier::Soldier, utils::position::tile_to_world};
-
-use super::soldier_move::MyTimer;
 
 const SPRITE_SIZE: f32 = 50.;
 const SPRITE_COL: usize = 12;
@@ -55,10 +53,7 @@ pub fn soldier_spawn(
                     ..default()
                 },
                 ..default()
-            },
-            MyTimer {
-                time: Stopwatch::new(),
-            },
+            }
         ));
         soldiers_state.spawn_done = true;
     }
