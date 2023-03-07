@@ -1,4 +1,4 @@
-use bevy::{prelude::*, time::Stopwatch};
+use bevy::{log, prelude::*, time::Stopwatch};
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapType},
     tiles::TilePos,
@@ -9,6 +9,9 @@ use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
 use super::soldier_move::MyTimer;
 
+const SPRITE_SIZE: f32 = 50.;
+const SPRITE_COL: usize = 12;
+
 #[allow(clippy::needless_pass_by_value)]
 pub fn soldier_spawn(
     mut commands: Commands,
@@ -18,14 +21,22 @@ pub fn soldier_spawn(
     mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
     if !tilemap_q.is_empty() && !soldiers_state.spawn_done {
+        log::info!("soldier_spawn");
+
         let (map_transform, grid_size, map_type) = tilemap_q.single();
 
         let tile_pos = TilePos { x: 10, y: 10 };
         let world_pos = tile_to_world(tile_pos, *grid_size, *map_type, map_transform);
 
         let texture_handle = asset_server.load("/public/sprites/soldier.png");
-        let texture_atlas =
-            TextureAtlas::from_grid(texture_handle, Vec2::new(45.0, 45.0), 4, 1, None, None);
+        let texture_atlas = TextureAtlas::from_grid(
+            texture_handle,
+            Vec2::new(SPRITE_SIZE, SPRITE_SIZE),
+            SPRITE_COL,
+            1,
+            None,
+            None,
+        );
         let texture_atlas_handle = texture_atlases.add(texture_atlas);
 
         commands.spawn((
@@ -35,7 +46,7 @@ pub fn soldier_spawn(
                 current_tile: 0,
                 current_pos: Vec2::new(0., 0.),
                 init_pos: Some(tile_pos),
-				dir_set: false,
+                dir_set: false,
             },
             SpriteSheetBundle {
                 texture_atlas: texture_atlas_handle,

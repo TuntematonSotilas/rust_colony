@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 extern crate wasm_bindgen;
 use bevy_ecs_tilemap::TilemapPlugin;
-use plugins::{map_plugin::MapPlugin, tiled_plugin::TiledMapPlugin};
+use plugins::{map_plugin::MapPlugin, soldier_plugin::SoldierPlugin, tiled_plugin::TiledMapPlugin};
 use wasm_bindgen::prelude::*;
 
 mod components;
@@ -38,6 +38,7 @@ pub fn start() {
         .add_plugin(TilemapPlugin)
         .add_plugin(TiledMapPlugin)
         .add_plugin(MapPlugin)
+        .add_plugin(SoldierPlugin)
         .add_startup_system(setup)
         .run();
 }

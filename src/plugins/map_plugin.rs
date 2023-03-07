@@ -1,9 +1,6 @@
 use bevy::prelude::*;
 
-use crate::resources::soldiers_state::SoldiersState;
-use crate::systems::{
-    mouse_click::mouse_click, soldier_move::soldier_move, soldier_spawn::soldier_spawn,
-};
+use crate::systems::mouse_click::mouse_click;
 
 use super::tiled_plugin::{TiledMap, TiledMapBundle};
 
@@ -21,10 +18,6 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 impl Plugin for MapPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(SoldiersState { spawn_done: false })
-            .add_startup_system(setup)
-            .add_system(soldier_spawn)
-            .add_system(soldier_move)
-            .add_system(mouse_click);
+        app.add_startup_system(setup).add_system(mouse_click);
     }
 }

@@ -8,7 +8,7 @@ use pathfinding::prelude::bfs;
 
 use crate::{
     components::soldier::{Pos, Soldier},
-    utils::{position::tile_to_world},
+    utils::position::tile_to_world,
 };
 
 #[allow(clippy::needless_pass_by_value)]
