@@ -1,4 +1,4 @@
-use bevy::{log, prelude::*};
+use bevy::{prelude::*};
 use bevy_ecs_tilemap::tiles::TilePos;
 
 use crate::components::soldier::Soldier;
@@ -28,8 +28,7 @@ pub fn soldier_sprite(
 
             // Set direction
             soldier_sprite.index = get_sprite_index(origin_tile, dest_tile);
-
-            log::info!("set dir:{}", soldier_sprite.index);
+            soldier.direction = soldier_sprite.index;
 
             soldier.dir_set = true;
         }

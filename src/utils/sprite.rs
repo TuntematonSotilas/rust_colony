@@ -10,3 +10,14 @@ pub const fn get_sprite_index(origin: TilePos, dest: TilePos) -> usize {
     }
     0
 }
+
+pub const fn get_sprite_index_range(direction: usize) -> (usize, usize) {
+    if direction == 3 {
+        return (3, 5);
+    } else if direction == 6 {
+        return (6, 8);
+    } else if direction == 9 {
+        return (9, 11);
+    }
+    (0, 2)
+}

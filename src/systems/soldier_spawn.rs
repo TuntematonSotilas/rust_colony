@@ -10,6 +10,7 @@ use crate::components::animation_timer::AnimationTimer;
 
 const SPRITE_SIZE: f32 = 50.;
 const SPRITE_COL: usize = 12;
+const ANIM_DUR: f32 = 0.1;
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn soldier_spawn(
@@ -46,6 +47,7 @@ pub fn soldier_spawn(
                 current_pos: Vec2::new(0., 0.),
                 init_pos: Some(tile_pos),
                 dir_set: false,
+                direction: 0,
             },
             SpriteSheetBundle {
                 texture_atlas: texture_atlas_handle,
@@ -55,7 +57,7 @@ pub fn soldier_spawn(
                 },
                 ..default()
             },
-            AnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating)),
+            AnimationTimer(Timer::from_seconds(ANIM_DUR, TimerMode::Repeating)),
         ));
         soldiers_state.spawn_done = true;
     }
