@@ -1,4 +1,4 @@
-use bevy::{prelude::*, log};
+use bevy::{prelude::*};
 use bevy_ecs_tilemap::tiles::TilePos;
 
 use crate::components::soldier::Soldier;

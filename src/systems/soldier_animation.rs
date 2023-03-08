@@ -1,4 +1,4 @@
-use bevy::{prelude::*, log};
+use bevy::{prelude::*};
 
 use crate::{components::{animation_timer::AnimationTimer, soldier::Soldier}, utils::sprite::get_sprite_index_range};
 
