@@ -86,6 +86,7 @@ pub fn mouse_click(
                         soldier.path = result;
                         soldier.move_done = false;
                         soldier.current_tile = 0;
+                        soldier.dir_set = false;
                     }
                 }
             }

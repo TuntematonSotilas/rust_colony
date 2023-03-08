@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, log};
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapType},
     tiles::TilePos,
@@ -58,6 +58,8 @@ pub fn soldier_move(
             // Stop all moves when all tiles covered
             if soldier.current_tile + 1 == soldier.path.len() {
                 soldier.move_done = true;
+                soldier.dir_set = false;
+                log::info!("last move");
             }
         }
     }
