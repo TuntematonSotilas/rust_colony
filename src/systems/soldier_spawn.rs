@@ -4,8 +4,9 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::resources::soldiers_state::SoldiersState;
+use crate::{resources::soldiers_state::SoldiersState};
 use crate::{components::soldier::Soldier, utils::position::tile_to_world};
+use crate::components::animation_timer::AnimationTimer;
 
 const SPRITE_SIZE: f32 = 50.;
 const SPRITE_COL: usize = 12;
@@ -53,7 +54,8 @@ pub fn soldier_spawn(
                     ..default()
                 },
                 ..default()
-            }
+            },
+            AnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating)),
         ));
         soldiers_state.spawn_done = true;
     }
