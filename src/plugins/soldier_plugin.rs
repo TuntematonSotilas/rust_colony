@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::resources::soldiers_state::SoldiersState;
-use crate::systems::soldier_sprite::soldier_sprite;
+use crate::systems::soldier_direction::soldier_sprite;
 use crate::systems::{soldier_move::soldier_move, soldier_spawn::soldier_spawn};
 
 pub struct SoldierPlugin;
