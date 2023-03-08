@@ -30,10 +30,7 @@ pub fn soldier_sprite(
                 // Get direction
                 index = get_sprite_index(origin_tile, dest_tile);
 
-                log::info!("set dir1:{index}");
             }
-
-            log::info!("set dir2:{index}");
 
             let mut soldier_sprite = soldier_sprite_q.single_mut();
             soldier_sprite.index = index;            

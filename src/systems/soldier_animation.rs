@@ -16,8 +16,6 @@ pub fn soldier_animation(
 
             let (min, max) = get_sprite_index_range(soldier.direction);
 
-            log::info!("{}/{}/{}", soldier.direction, min, max);
-
             timer.0.tick(time.delta());
             if timer.0.just_finished() {
                 sprite.index = if sprite.index == max {
