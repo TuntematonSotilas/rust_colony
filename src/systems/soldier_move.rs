@@ -1,4 +1,4 @@
-use bevy::{prelude::*, log};
+use bevy::{log, prelude::*};
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapType},
     tiles::TilePos,

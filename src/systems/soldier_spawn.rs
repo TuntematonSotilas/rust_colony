@@ -4,9 +4,9 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::{resources::soldiers_state::SoldiersState};
-use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 use crate::components::animation_timer::AnimationTimer;
+use crate::resources::soldiers_state::SoldiersState;
+use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
 const SPRITE_SIZE: f32 = 50.;
 const SPRITE_COL: usize = 12;
