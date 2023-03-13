@@ -11,8 +11,15 @@ mod systems;
 mod utils;
 
 fn setup(mut commands: Commands) {
-    // 2d camera
+    
+	// hide loader
+	web_sys::window().unwrap().document().unwrap()
+		.get_element_by_id("loader").unwrap()
+		.set_class_name("hide");
+
+	// 2d camera
     commands.spawn(Camera2dBundle::default());
+	
 }
 
 // ------ ------
