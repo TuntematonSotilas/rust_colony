@@ -21,8 +21,7 @@ pub fn soldier_spawn(
     mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
     if !tilemap_q.is_empty() && !soldiers_state.spawn_done {
-        log::info!("soldier_spawn");
-
+        
         let (map_transform, grid_size, map_type) = tilemap_q.single();
 
         let tile_pos = TilePos { x: 10, y: 10 };

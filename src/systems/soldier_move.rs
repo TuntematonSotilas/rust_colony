@@ -59,7 +59,6 @@ pub fn soldier_move(
             if soldier.current_tile + 1 == soldier.path.len() {
                 soldier.move_done = true;
                 soldier.dir_set = false;
-                log::info!("last move");
             }
         }
     }
