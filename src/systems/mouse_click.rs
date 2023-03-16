@@ -8,14 +8,14 @@ use pathfinding::prelude::bfs;
 
 use crate::{
     components::soldier::{Pos, Soldier},
-    utils::position::tile_to_world, resources::tile_clicked::TileClicked,
+    utils::position::tile_to_world, resources::cursor_state::CursorState,
 };
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn mouse_click(
     windows: Res<Windows>,
     buttons: Res<Input<MouseButton>>,
-	mut tile_clicked: ResMut<TileClicked>,
+	mut cursor_state: ResMut<CursorState>,
     camera_q: Query<(&Camera, &GlobalTransform), With<Camera2d>>,
     tilemap_q: Query<(&TilemapSize, &TilemapGridSize, &TilemapType, &Transform), Without<Soldier>>,
     mut soldier_sprite_q: Query<&mut Transform, With<Soldier>>,
@@ -51,7 +51,8 @@ pub fn mouse_click(
                 if let Some(tile_pos) =
                     TilePos::from_world_pos(&cursor_in_map_pos_xy, map_size, grid_size, map_type)
                 {
-					tile_clicked.pos = Some(tile_pos);
+					cursor_state.click_pos = Some(tile_pos);
+					cursor_state.spawn_done = false;
 
                     let mut solider_pos: TilePos = TilePos { x: 10, y: 10 };
                     let mut soldier_trsf = soldier_sprite_q.single_mut();
