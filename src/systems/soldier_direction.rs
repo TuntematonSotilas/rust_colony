@@ -5,12 +5,10 @@ use crate::components::soldier::Soldier;
 use crate::utils::sprite::get_sprite_index;
 
 #[allow(clippy::needless_pass_by_value)]
-pub fn soldier_sprite(
-    mut soldier_q: Query<&mut Soldier>,
-    mut soldier_sprite_q: Query<&mut TextureAtlasSprite, With<Soldier>>,
-) {
-    if !soldier_q.is_empty() && !soldier_sprite_q.is_empty() {
-        let mut soldier = soldier_q.single_mut();
+pub fn soldier_sprite(mut soldier_sprite_q: Query<(&mut Soldier, &mut TextureAtlasSprite)>) {
+    if !soldier_sprite_q.is_empty() {
+        let (mut soldier, mut soldier_sprite) = soldier_sprite_q.single_mut();
+
         if !soldier.dir_set {
             let index = if !soldier.move_done && soldier.path.len() > 1 {
                 // Get origin
@@ -30,7 +28,6 @@ pub fn soldier_sprite(
                 0
             };
 
-            let mut soldier_sprite = soldier_sprite_q.single_mut();
             soldier_sprite.index = index;
             soldier.direction = index;
             soldier.dir_set = true;

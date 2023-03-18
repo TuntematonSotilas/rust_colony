@@ -1,4 +1,4 @@
-use bevy::{prelude::*};
+use bevy::prelude::*;
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapType},
     tiles::TilePos,
@@ -12,16 +12,13 @@ const ERROR_MARGIN: f32 = 2.;
 #[allow(clippy::needless_pass_by_value)]
 pub fn soldier_move(
     time: Res<Time>,
-    mut soldier_q: Query<&mut Soldier>,
-    mut soldier_trsf_q: Query<&mut Transform, With<Soldier>>,
+    mut soldier_trsf_q: Query<(&mut Soldier, &mut Transform)>,
     tilemap_q: Query<(&Transform, &TilemapGridSize, &TilemapType), Without<Soldier>>,
 ) {
-    if !soldier_q.is_empty() && !soldier_trsf_q.is_empty() && !tilemap_q.is_empty() {
-        let mut soldier = soldier_q.single_mut();
+    if !soldier_trsf_q.is_empty() && !tilemap_q.is_empty() {
+        let (mut soldier, mut soldier_trsf) = soldier_trsf_q.single_mut();
 
         if !soldier.move_done && soldier.path.len() > 1 {
-            let mut soldier_trsf = soldier_trsf_q.single_mut();
-
             let (map_transform, grid_size, map_type) = tilemap_q.single();
 
             // Get origin
