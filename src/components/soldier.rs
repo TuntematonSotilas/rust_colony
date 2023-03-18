@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::prelude::{Component, Vec2};
 use bevy_ecs_tilemap::tiles::TilePos;
 
 #[derive(Component)]

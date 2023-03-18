@@ -26,6 +26,7 @@ impl Plugin for MapPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(CursorState {
             spawn_done: false,
+            pathfind_done: false,
             click_pos: None,
         })
         .add_startup_system(setup)
