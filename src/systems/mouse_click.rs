@@ -6,6 +6,7 @@ use bevy_ecs_tilemap::{
 
 use crate::resources::cursor_state::CursorState;
 
+#[allow(clippy::needless_pass_by_value)]
 pub fn mouse_click(
     windows_q: Query<&Window, With<PrimaryWindow>>,
     buttons: Res<Input<MouseButton>>,
