@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, window::WindowResolution};
 extern crate wasm_bindgen;
 use bevy_ecs_tilemap::TilemapPlugin;
 use plugins::{map_plugin::MapPlugin, soldier_plugin::SoldierPlugin, tiled_plugin::TiledMapPlugin};
@@ -36,11 +36,10 @@ pub fn start() {
             DefaultPlugins
                 .set(ImagePlugin::default_nearest())
                 .set(WindowPlugin {
-                    window: WindowDescriptor {
-                        width: w,
-                        height: h,
+                    primary_window: Some(Window {
+                        resolution: WindowResolution::new(w, h),
                         ..default()
-                    },
+                    }),
                     ..default()
                 }),
         )

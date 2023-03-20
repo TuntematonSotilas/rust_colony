@@ -1,17 +1,3 @@
-// How to use this:
-//   You should copy/paste this into your project and use it much like examples/tiles.rs uses this
-//   file. When you do so you will need to adjust the code based on whether you're using the
-//   'atlas` feature in bevy_ecs_tilemap. The bevy_ecs_tilemap uses this as an example of how to
-//   use both single image tilesets and image collection tilesets. Since your project won't have
-//   the 'atlas' feature defined in your Cargo config, the expressions prefixed by the #[cfg(...)]
-//   macro will not compile in your project as-is. If your project depends on the bevy_ecs_tilemap
-//   'atlas' feature then move all of the expressions prefixed by #[cfg(not(feature = "atlas"))].
-//   Otherwise remove all of the expressions prefixed by #[cfg(feature = "atlas")].
-//
-// Functional limitations:
-//   * When the 'atlas' feature is enabled tilesets using a collection of images will be skipped.
-//   * Only finite tile layers are loaded. Infinite tile layers and object layers will be skipped.
-
 use std::io::BufReader;
 
 use bevy::{
@@ -88,7 +74,6 @@ impl AssetLoader for TiledLoader {
             for (tileset_index, tileset) in map.tilesets().iter().enumerate() {
                 let tilemap_texture = match &tileset.image {
                     None => {
-                        // Skipping image collection tileset which is incompatible with atlas feature
                         continue;
                     }
                     Some(img) => {
@@ -109,6 +94,8 @@ impl AssetLoader for TiledLoader {
                 tilemap_textures,
             };
 
+            log::info!("Loaded map: {}", load_context.path().display());
+
             let loaded_asset = LoadedAsset::new(asset_map);
             load_context.set_default_asset(loaded_asset.with_dependencies(dependencies));
             Ok(())
@@ -121,13 +108,6 @@ impl AssetLoader for TiledLoader {
     }
 }
 
-#[allow(
-    clippy::cast_precision_loss,
-    clippy::cast_possible_truncation,
-    clippy::cast_possible_wrap,
-    clippy::needless_pass_by_value,
-    clippy::too_many_lines
-)]
 pub fn process_loaded_maps(
     mut commands: Commands,
     mut map_events: EventReader<AssetEvent<TiledMap>>,
@@ -139,12 +119,16 @@ pub fn process_loaded_maps(
     let mut changed_maps = Vec::<Handle<TiledMap>>::default();
     for event in map_events.iter() {
         match event {
-            AssetEvent::Created { handle } | AssetEvent::Modified { handle } => {
-                // Map added or changed
+            AssetEvent::Created { handle } => {
+                log::info!("Map added!");
+                changed_maps.push(handle.clone());
+            }
+            AssetEvent::Modified { handle } => {
+                log::info!("Map changed!");
                 changed_maps.push(handle.clone());
             }
             AssetEvent::Removed { handle } => {
-                // Map removed!
+                log::info!("Map removed!");
                 // if mesh was modified and removed in the same update, ignore the modification
                 // events are ordered so future modification events are ok
                 changed_maps.retain(|changed_handle| changed_handle == handle);
@@ -157,7 +141,7 @@ pub fn process_loaded_maps(
         changed_maps.push(new_map_handle.clone_weak());
     }
 
-    for changed_map in &changed_maps {
+    for changed_map in changed_maps.iter() {
         for (map_handle, mut layer_storage) in map_query.iter_mut() {
             // only deal with currently changed map
             if map_handle != changed_map {
@@ -168,7 +152,7 @@ pub fn process_loaded_maps(
                 for layer_entity in layer_storage.storage.values() {
                     if let Ok((_, layer_tile_storage)) = tile_storage_query.get(*layer_entity) {
                         for tile in layer_tile_storage.iter().flatten() {
-                            commands.entity(*tile).despawn_recursive();
+                            commands.entity(*tile).despawn_recursive()
                         }
                     }
                     // commands.entity(*layer_entity).despawn_recursive();
@@ -203,12 +187,18 @@ pub fn process_loaded_maps(
                         let offset_y = layer.offset_y;
 
                         let tiled::LayerType::TileLayer(tile_layer) = layer.layer_type() else {
-                            // Skipping layer because only tile layers are supported
+                            log::info!(
+                                "Skipping layer {} because only tile layers are supported.",
+                                layer.id()
+                            );
                             continue;
                         };
 
                         let tiled::TileLayer::Finite(layer_data) = tile_layer else {
-                            // Skipping layer because only finite layers are supported
+                            log::info!(
+                                "Skipping layer {} because only finite layers are supported.",
+                                layer.id()
+                            );
                             continue;
                         };
 
@@ -240,27 +230,30 @@ pub fn process_loaded_maps(
 
                         for x in 0..map_size.x {
                             for y in 0..map_size.y {
-                                let mapped_y = if tiled_map.map.orientation
-                                    == tiled::Orientation::Orthogonal
-                                {
-                                    (tiled_map.map.height - 1) - y
-                                } else {
-                                    y
-                                };
+                                let mut mapped_y = y;
+                                if tiled_map.map.orientation == tiled::Orientation::Orthogonal {
+                                    mapped_y = (tiled_map.map.height - 1) - y;
+                                }
 
                                 let mapped_x = x as i32;
                                 let mapped_y = mapped_y as i32;
 
-                                let Some(layer_tile) = layer_data.get_tile(mapped_x, mapped_y)  else {
-                                    continue;
+                                let layer_tile = match layer_data.get_tile(mapped_x, mapped_y) {
+                                    Some(t) => t,
+                                    None => {
+                                        continue;
+                                    }
                                 };
-
                                 if tileset_index != layer_tile.tileset_index() {
                                     continue;
                                 }
-                                let Some(layer_tile_data) = layer_data.get_tile_data(mapped_x, mapped_y) else {
-                                    continue;
-                                };
+                                let layer_tile_data =
+                                    match layer_data.get_tile_data(mapped_x, mapped_y) {
+                                        Some(d) => d,
+                                        None => {
+                                            continue;
+                                        }
+                                    };
 
                                 let texture_index = match tilemap_texture {
                                     TilemapTexture::Single(_) => layer_tile.id(),

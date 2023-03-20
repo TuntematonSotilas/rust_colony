@@ -1,4 +1,4 @@
-use bevy::{math::Vec4Swizzles, prelude::*};
+use bevy::{math::Vec4Swizzles, prelude::*, window::PrimaryWindow};
 use bevy_ecs_tilemap::{
     prelude::{TilemapGridSize, TilemapSize, TilemapType},
     tiles::TilePos,
@@ -6,16 +6,15 @@ use bevy_ecs_tilemap::{
 
 use crate::resources::cursor_state::CursorState;
 
-#[allow(clippy::needless_pass_by_value)]
 pub fn mouse_click(
-    windows: Res<Windows>,
+    windows_q: Query<&Window, With<PrimaryWindow>>,
     buttons: Res<Input<MouseButton>>,
     mut cursor_state: ResMut<CursorState>,
     camera_q: Query<(&Camera, &GlobalTransform), With<Camera2d>>,
     tilemap_q: Query<(&TilemapSize, &TilemapGridSize, &TilemapType, &Transform)>,
 ) {
     if buttons.just_released(MouseButton::Left) && !camera_q.is_empty() && !tilemap_q.is_empty() {
-        let window = windows.get_primary().unwrap();
+        let window = windows_q.get_single().unwrap();
 
         // get the camera info and transform
         // assuming there is exactly one main camera entity, so query::single() is OK
