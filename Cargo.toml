@@ -26,6 +26,7 @@ anyhow = "1.0"
 tiled = { version = "0.10.2", default-features = false }
 web-sys = { version = "0.3.61", features = ["Window", "Document", "Element"] }
 pathfinding = "4.2.1"
+bevy_rapier2d = { version = "*", features = [ "simd-stable", "debug-render-2d" ] }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.34"
