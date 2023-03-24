@@ -2,7 +2,7 @@ use bevy::{prelude::*, log};
 use bevy::sprite::collide_aabb::collide;
 
 use crate::components::{soldier::Soldier, wall::Wall};
-use crate::utils::constant::{SOLDIER_SPRITE_SIZE, TILE_SIZE};
+use crate::utils::constant::TILE_SIZE;
 
 const SOLDIER_SIZE: Vec2 = Vec2::new(20., 20.);
 const WALL_SIZE: Vec2 = Vec2::new(TILE_SIZE, TILE_SIZE);
