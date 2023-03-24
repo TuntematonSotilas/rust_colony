@@ -19,44 +19,47 @@ pub fn soldier_move(
         let (mut soldier, mut soldier_trsf) = soldier_trsf_q.single_mut();
 
         if !soldier.move_done && soldier.path.len() > 1 {
-            let (map_transform, grid_size, map_type) = tilemap_q.single();
+            for (map_transform, grid_size, map_type) in &tilemap_q {
+				if map_transform.translation.z == 0. {
 
-            // Get origin
-            let origin_tile = TilePos {
-                x: soldier.path[soldier.current_tile].0,
-                y: soldier.path[soldier.current_tile].1,
-            };
-            let origin = tile_to_world(origin_tile, *grid_size, *map_type, map_transform);
-            // Get destination
-            let dest_tile = TilePos {
-                x: soldier.path[soldier.current_tile + 1].0,
-                y: soldier.path[soldier.current_tile + 1].1,
-            };
-            let dest = tile_to_world(dest_tile, *grid_size, *map_type, map_transform);
+					// Get origin
+					let origin_tile = TilePos {
+						x: soldier.path[soldier.current_tile].0,
+						y: soldier.path[soldier.current_tile].1,
+					};
+					let origin = tile_to_world(origin_tile, *grid_size, *map_type, map_transform);
+					// Get destination
+					let dest_tile = TilePos {
+						x: soldier.path[soldier.current_tile + 1].0,
+						y: soldier.path[soldier.current_tile + 1].1,
+					};
+					let dest = tile_to_world(dest_tile, *grid_size, *map_type, map_transform);
 
-            // Get delta from timer
-            let delta_x = (dest.x - origin.x) * time.delta_seconds() * SPEED;
-            let delta_y = (dest.y - origin.y) * time.delta_seconds() * SPEED;
+					// Get delta from timer
+					let delta_x = (dest.x - origin.x) * time.delta_seconds() * SPEED;
+					let delta_y = (dest.y - origin.y) * time.delta_seconds() * SPEED;
 
-            // Set the position
-            soldier_trsf.translation.x += delta_x;
-            soldier_trsf.translation.y += delta_y;
-            soldier.current_pos = Vec2::new(soldier_trsf.translation.x, soldier_trsf.translation.y);
+					// Set the position
+					soldier_trsf.translation.x += delta_x;
+					soldier_trsf.translation.y += delta_y;
+					soldier.current_pos = Vec2::new(soldier_trsf.translation.x, soldier_trsf.translation.y);
 
-            // Go to next tile when destination reached
-            let rest_x = (soldier_trsf.translation.x.floor() - dest.x).abs();
-            let rest_y = (soldier_trsf.translation.y.floor() - dest.y).abs();
+					// Go to next tile when destination reached
+					let rest_x = (soldier_trsf.translation.x.floor() - dest.x).abs();
+					let rest_y = (soldier_trsf.translation.y.floor() - dest.y).abs();
 
-            if rest_x < ERROR_MARGIN && rest_y < ERROR_MARGIN {
-                soldier.current_tile += 1;
-                soldier.dir_set = false;
-            }
+					if rest_x < ERROR_MARGIN && rest_y < ERROR_MARGIN {
+						soldier.current_tile += 1;
+						soldier.dir_set = false;
+					}
 
-            // Stop all moves when all tiles covered
-            if soldier.current_tile + 1 == soldier.path.len() {
-                soldier.move_done = true;
-                soldier.dir_set = false;
-            }
-        }
+					// Stop all moves when all tiles covered
+					if soldier.current_tile + 1 == soldier.path.len() {
+						soldier.move_done = true;
+						soldier.dir_set = false;
+					}
+				}
+			}
+		}
     }
 }
