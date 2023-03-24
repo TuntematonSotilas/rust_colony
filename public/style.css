@@ -1,7 +1,7 @@
 body {
     background-color: black;
     margin: 0;
-	cursor: url("cursors/cursor.png"), auto;	
+	cursor: url("cursors/cursor.png") 15 15, auto;	
 }
 
 
