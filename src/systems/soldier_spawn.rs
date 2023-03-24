@@ -4,11 +4,10 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::components::animation_timer::AnimationTimer;
+use crate::{components::{animation_timer::AnimationTimer, wall::Wall}, utils::constant::SOLDIER_SPRITE_SIZE};
 use crate::resources::soldiers_state::SoldiersState;
 use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
-const SPRITE_SIZE: f32 = 50.;
 const SPRITE_COL: usize = 12;
 const ANIM_DUR: f32 = 0.1;
 
@@ -29,7 +28,7 @@ pub fn soldier_spawn(
         let texture_handle = asset_server.load("/public/sprites/soldier.png");
         let texture_atlas = TextureAtlas::from_grid(
             texture_handle,
-            Vec2::new(SPRITE_SIZE, SPRITE_SIZE),
+            Vec2::new(SOLDIER_SPRITE_SIZE, SOLDIER_SPRITE_SIZE),
             SPRITE_COL,
             1,
             None,
@@ -57,6 +56,22 @@ pub fn soldier_spawn(
             },
             AnimationTimer(Timer::from_seconds(ANIM_DUR, TimerMode::Repeating)),
         ));
+
+        let wall_pos = TilePos { x: 12, y: 12 };
+        let wall_world_pos = tile_to_world(wall_pos, *grid_size, *map_type, map_transform);
+
+        commands.spawn((
+            Wall,
+            SpriteBundle  {
+                texture: asset_server.load("/public/sprites/wall.png"),
+                transform: Transform {
+                    translation: wall_world_pos,
+                    ..default()
+                },
+                ..default()
+            },
+        ));
+
         soldiers_state.spawn_done = true;
     }
 }

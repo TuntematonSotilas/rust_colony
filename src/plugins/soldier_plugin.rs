@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 use crate::resources::soldiers_state::SoldiersState;
+use crate::systems::collision::collision;
 use crate::systems::soldier_animation::soldier_animation;
 use crate::systems::soldier_direction::soldier_sprite;
 use crate::systems::soldier_pathfind::soldier_pathfind;
@@ -15,6 +16,7 @@ impl Plugin for SoldierPlugin {
             .add_system(soldier_pathfind)
             .add_system(soldier_move)
             .add_system(soldier_sprite)
-            .add_system(soldier_animation);
+            .add_system(soldier_animation)
+            .add_system(collision);
     }
 }
