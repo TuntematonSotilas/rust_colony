@@ -57,10 +57,10 @@ pub fn soldier_spawn(
             AnimationTimer(Timer::from_seconds(ANIM_DUR, TimerMode::Repeating)),
         ));
 
-        let wall_pos = TilePos { x: 12, y: 12 };
+        /*let wall_pos = TilePos { x: 12, y: 12 };
         let wall_world_pos = tile_to_world(wall_pos, *grid_size, *map_type, map_transform);
 
-        commands.spawn((
+       commands.spawn((
             Wall,
             SpriteBundle  {
                 texture: asset_server.load("/public/sprites/wall.png"),
@@ -70,7 +70,7 @@ pub fn soldier_spawn(
                 },
                 ..default()
             },
-        ));
+        ));*/
 
         soldiers_state.spawn_done = true;
     }
