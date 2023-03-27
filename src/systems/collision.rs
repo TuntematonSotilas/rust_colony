@@ -4,7 +4,7 @@ use bevy_ecs_tilemap::prelude::{TilemapGridSize, TilemapType};
 use bevy_ecs_tilemap::tiles::{TilePos, TileStorage};
 
 use crate::components::{soldier::Soldier};
-use crate::utils::constant::{TILE_SIZE};
+use crate::utils::constant::{TILE_SIZE, Z_MAP_COLLIDE_LAYER};
 use crate::utils::position::tile_to_world;
 
 const SOLDIER_SIZE: Vec2 = Vec2::new(TILE_SIZE, TILE_SIZE);
@@ -20,8 +20,7 @@ pub fn collision(
         let (mut soldier, soldier_trsf) = soldier_trsf_q.single_mut();
 
 		for (map_transform, map_type, grid_size, tilemap_storage) in tilemap_q.iter() {
-			if map_transform.translation.z == 1. {
-				
+			if map_transform.translation.z == Z_MAP_COLLIDE_LAYER {
 				for tile_entity in tilemap_storage.iter().flatten() {
 					let tile_pos = tile_q.get(*tile_entity).unwrap();
 					//log::info!("tile_pos {}", tile_pos.x);

@@ -4,7 +4,7 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::{components::soldier::Soldier, utils::position::tile_to_world};
+use crate::{components::soldier::Soldier, utils::{position::tile_to_world, constant::Z_MAP_BASE_LAYER}};
 
 const SPEED: f32 = 2.;
 const ERROR_MARGIN: f32 = 2.;
@@ -20,7 +20,7 @@ pub fn soldier_move(
 
         if !soldier.move_done && soldier.path.len() > 1 {
             for (map_transform, grid_size, map_type) in &tilemap_q {
-				if map_transform.translation.z == 0. {
+				if map_transform.translation.z == Z_MAP_BASE_LAYER {
 
 					// Get origin
 					let origin_tile = TilePos {

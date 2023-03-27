@@ -4,7 +4,7 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::resources::cursor_state::CursorState;
+use crate::{resources::cursor_state::CursorState, utils::constant::Z_MAP_BASE_LAYER};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn mouse_click(
@@ -22,7 +22,7 @@ pub fn mouse_click(
         let (camera, camera_transform) = camera_q.single();
 
 		for (map_transform, map_size, grid_size, map_type) in &tilemap_q {
-			if map_transform.translation.z == 0. {
+			if map_transform.translation.z == Z_MAP_BASE_LAYER {
 				// check if the cursor is inside the window and get its position
 				if let Some(screen_position) = window.cursor_position() {
 					// check if it is possible to create a ray from screen coordinates to world coordinates

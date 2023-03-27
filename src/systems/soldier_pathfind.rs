@@ -8,7 +8,7 @@ use pathfinding::prelude::bfs;
 use crate::{
     components::soldier::{Pos, Soldier},
     resources::cursor_state::CursorState,
-    utils::position::tile_to_world,
+    utils::{position::tile_to_world, constant::Z_MAP_BASE_LAYER},
 };
 
 #[allow(clippy::needless_pass_by_value)]
@@ -23,7 +23,7 @@ pub fn soldier_pathfind(
         if let Some(tile_pos) = cursor_state.click_pos {
            
 			for (map_transform, map_size, grid_size, map_type) in &tilemap_q {
-				if map_transform.translation.z == 0. {
+				if map_transform.translation.z == Z_MAP_BASE_LAYER {
 							
 					let mut solider_pos = TilePos { x: 10, y: 10 };
 					let (mut soldier, mut soldier_trsf) = soldier_sprite_q.single_mut();

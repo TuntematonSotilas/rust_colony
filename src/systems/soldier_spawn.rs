@@ -4,7 +4,7 @@ use bevy_ecs_tilemap::{
     tiles::{TilePos},
 };
 
-use crate::{components::{animation_timer::AnimationTimer}, utils::constant::SOLDIER_SPRITE_SIZE};
+use crate::{components::{animation_timer::AnimationTimer}, utils::constant::{SOLDIER_SPRITE_SIZE, Z_MAP_BASE_LAYER}};
 use crate::resources::soldiers_state::SoldiersState;
 use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
@@ -21,10 +21,11 @@ pub fn soldier_spawn(
 ) {
     if !tilemap_q.is_empty() && !soldiers_state.spawn_done {
         for (map_transform, grid_size, map_type) in &tilemap_q {
-			if map_transform.translation.z == 0. {
+			if map_transform.translation.z == Z_MAP_BASE_LAYER {
+
 				let tile_pos = TilePos { x: 10, y: 10 };
 				let world_pos = tile_to_world(tile_pos, *grid_size, *map_type, map_transform);
-		
+
 				let texture_handle = asset_server.load("/public/sprites/soldier.png");
 				let texture_atlas = TextureAtlas::from_grid(
 					texture_handle,

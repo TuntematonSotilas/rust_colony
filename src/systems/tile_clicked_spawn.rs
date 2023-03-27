@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy_ecs_tilemap::prelude::{TilemapGridSize, TilemapType};
 
+use crate::utils::constant::Z_MAP_BASE_LAYER;
 use crate::{components::animation_timer::AnimationTimer, resources::cursor_state::CursorState};
 use crate::{components::clicked_tile::ClickedTile, utils::position::tile_to_world};
 
@@ -20,7 +21,7 @@ pub fn tile_clicked_spawn(
         if let Some(pos) = cursor_state.click_pos {
         
 			for (map_transform, grid_size, map_type) in &tilemap_q {
-				if map_transform.translation.z == 0. {
+				if map_transform.translation.z == Z_MAP_BASE_LAYER {
 							
 					let world_pos = tile_to_world(pos, *grid_size, *map_type, map_transform);
 
