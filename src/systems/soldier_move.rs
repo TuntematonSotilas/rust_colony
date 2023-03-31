@@ -6,7 +6,7 @@ use bevy_ecs_tilemap::{
 
 use crate::{components::soldier::Soldier, utils::{position::tile_to_world, constant::Z_MAP_BASE_LAYER}};
 
-const SPEED: f32 = 2.;
+const SPEED: f32 = 3.;
 const ERROR_MARGIN: f32 = 2.;
 
 #[allow(clippy::needless_pass_by_value)]
