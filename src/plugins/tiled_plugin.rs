@@ -12,8 +12,6 @@ use bevy::{
 };
 use bevy_ecs_tilemap::prelude::*;
 
-use anyhow::Result;
-
 #[derive(Default)]
 pub struct TiledMapPlugin;
 
@@ -54,7 +52,7 @@ impl AssetLoader for TiledLoader {
         &'a self,
         bytes: &'a [u8],
         load_context: &'a mut bevy::asset::LoadContext,
-    ) -> bevy::asset::BoxedFuture<'a, Result<()>> {
+    ) -> bevy::asset::BoxedFuture<'a, Result<(), bevy::asset::Error>> {
         Box::pin(async move {
             // The load context path is the TMX file itself. If the file is at the root of the
             // assets/ directory structure then the tmx_dir will be empty, which is fine.
@@ -66,7 +64,7 @@ impl AssetLoader for TiledLoader {
             let mut loader = tiled::Loader::new();
             let map = loader
                 .load_tmx_map_from(BufReader::new(bytes), load_context.path())
-                .map_err(|e| anyhow::anyhow!("Could not load TMX map: {e}"))?;
+                .unwrap();
 
             let mut dependencies = Vec::new();
             let mut tilemap_textures = HashMap::default();

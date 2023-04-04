@@ -11,7 +11,7 @@ repository = "https://github.com/TuntematonSotilas/rust_colony"
 crate-type = ["cdylib"]
 
 [dependencies]
-bevy = { version = "0.10", default-features = true, features = [
+bevy = { version = "0.10.1", default-features = true, features = [
    "bevy_core_pipeline",
    "bevy_render",
    "bevy_asset",
@@ -20,7 +20,6 @@ bevy = { version = "0.10", default-features = true, features = [
 ] }
 wasm-bindgen = "0.2.84"
 bevy_ecs_tilemap = { version = "0.10.0", features = ["atlas", "render"] }
-anyhow = "1.0"
 tiled = { version = "0.10.2", default-features = false }
 web-sys = { version = "0.3.61", features = ["Window", "Document", "Element"] }
 pathfinding = "4.2.1"
