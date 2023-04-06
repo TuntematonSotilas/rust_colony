@@ -2,22 +2,22 @@ use bevy_ecs_tilemap::tiles::TilePos;
 
 pub const fn get_sprite_index(origin: TilePos, dest: TilePos) -> usize {
     if dest.y > origin.y {
-        return 3;
+        return 7;
     } else if dest.x < origin.x {
-        return 6;
+        return 14;
     } else if dest.x > origin.x {
-        return 9;
+        return 21;
     }
     0
 }
 
 pub const fn get_sprite_index_range(direction: usize) -> (usize, usize) {
-    if direction == 3 {
-        return (3, 5);
-    } else if direction == 6 {
-        return (6, 8);
-    } else if direction == 9 {
-        return (9, 11);
+    if direction == 7 {
+        return (8, 13);
+    } else if direction == 14 {
+        return (15, 20);
+    } else if direction == 21 {
+        return (22, 27);
     }
-    (0, 2)
+    (1, 6)
 }

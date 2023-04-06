@@ -4,11 +4,10 @@ use bevy_ecs_tilemap::{
     tiles::{TilePos},
 };
 
-use crate::{components::{animation_timer::AnimationTimer}, utils::constant::{SOLDIER_SPRITE_SIZE, Z_MAP_BASE_LAYER}};
+use crate::{components::{animation_timer::AnimationTimer}, utils::constant::{SOLDIER_SPRITE_SIZE, Z_MAP_BASE_LAYER, SOLDIER_SPRITE_NB}};
 use crate::resources::soldiers_state::SoldiersState;
 use crate::{components::soldier::Soldier, utils::position::tile_to_world};
 
-const SPRITE_COL: usize = 12;
 const ANIM_DUR: f32 = 0.1;
 
 #[allow(clippy::needless_pass_by_value)]
@@ -30,7 +29,7 @@ pub fn soldier_spawn(
 				let texture_atlas = TextureAtlas::from_grid(
 					texture_handle,
 					Vec2::new(SOLDIER_SPRITE_SIZE, SOLDIER_SPRITE_SIZE),
-					SPRITE_COL,
+					SOLDIER_SPRITE_NB,
 					1,
 					None,
 					None,
