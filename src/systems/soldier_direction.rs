@@ -10,7 +10,7 @@ pub fn soldier_sprite(mut soldier_sprite_q: Query<(&mut Soldier, &mut TextureAtl
         let (mut soldier, mut soldier_sprite) = soldier_sprite_q.single_mut();
 
         if !soldier.dir_set {
-            let index = if !soldier.move_done && soldier.path.len() > 1 {
+            if !soldier.move_done && soldier.path.len() > 1 {
                 // Get origin
                 let origin_tile = TilePos {
                     x: soldier.path[soldier.current_tile].0,
@@ -21,15 +21,15 @@ pub fn soldier_sprite(mut soldier_sprite_q: Query<(&mut Soldier, &mut TextureAtl
                     x: soldier.path[soldier.current_tile + 1].0,
                     y: soldier.path[soldier.current_tile + 1].1,
                 };
-
                 // Get direction
-                get_sprite_index(origin_tile, dest_tile)
+                let index = get_sprite_index(origin_tile, dest_tile);
+                // Set direction
+                soldier_sprite.index = index;
+                soldier.direction = index;
             } else {
-                0
-            };
-
-            soldier_sprite.index = index;
-            soldier.direction = index;
+                // Set direction
+                soldier_sprite.index = soldier.direction;
+            }
             soldier.dir_set = true;
         }
     }

@@ -263,7 +263,6 @@ pub fn process_loaded_maps(
 
                                 let tile_pos = TilePos { x, y };
 
-                                
                                 let tile_entity = commands
                                     .spawn(TileBundle {
                                         position: tile_pos,
@@ -277,7 +276,7 @@ pub fn process_loaded_maps(
                                         ..Default::default()
                                     })
                                     .id();
-                                
+
                                 tile_storage.set(&tile_pos, tile_entity);
                             }
                         }

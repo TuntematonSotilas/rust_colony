@@ -12,7 +12,9 @@ pub fn tile_to_world(
     map_type: TilemapType,
     map_transform: &Transform,
 ) -> Vec3 {
-    let tile_center = tile_pos.center_in_world(&grid_size, &map_type).extend(Z_UNIT);
+    let tile_center = tile_pos
+        .center_in_world(&grid_size, &map_type)
+        .extend(Z_UNIT);
     let trsf = *map_transform * Transform::from_translation(tile_center);
     trsf.translation
 }

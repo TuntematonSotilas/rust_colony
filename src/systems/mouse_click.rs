@@ -21,29 +21,33 @@ pub fn mouse_click(
         // assuming there is exactly one main camera entity, so query::single() is OK
         let (camera, camera_transform) = camera_q.single();
 
-		for (map_transform, map_size, grid_size, map_type) in &tilemap_q {
-			if map_transform.translation.z == Z_MAP_BASE_LAYER {
-				// check if the cursor is inside the window and get its position
-				if let Some(screen_position) = window.cursor_position() {
-					// check if it is possible to create a ray from screen coordinates to world coordinates
-					if let Some(ray) = camera.viewport_to_world(camera_transform, screen_position) {
-						// get 2d world mouse coordinates from the ray
-						let world_position: Vec2 = ray.origin.truncate();
-						let cursor_pos = Vec4::from((world_position, 1.0, 1.0));
-						let cursor_in_map_pos = map_transform.compute_matrix().inverse() * cursor_pos;
-						let cursor_in_map_pos_xy = cursor_in_map_pos.xy();
+        for (map_transform, map_size, grid_size, map_type) in &tilemap_q {
+            if map_transform.translation.z == Z_MAP_BASE_LAYER {
+                // check if the cursor is inside the window and get its position
+                if let Some(screen_position) = window.cursor_position() {
+                    // check if it is possible to create a ray from screen coordinates to world coordinates
+                    if let Some(ray) = camera.viewport_to_world(camera_transform, screen_position) {
+                        // get 2d world mouse coordinates from the ray
+                        let world_position: Vec2 = ray.origin.truncate();
+                        let cursor_pos = Vec4::from((world_position, 1.0, 1.0));
+                        let cursor_in_map_pos =
+                            map_transform.compute_matrix().inverse() * cursor_pos;
+                        let cursor_in_map_pos_xy = cursor_in_map_pos.xy();
 
-						// Once we have a world position we can transform it into a possible tile position.
-						if let Some(tile_pos) =
-							TilePos::from_world_pos(&cursor_in_map_pos_xy, map_size, grid_size, map_type)
-						{
-							cursor_state.click_pos = Some(tile_pos);
-							cursor_state.pathfind_done = false;
-							cursor_state.spawn_done = false;
-						}
-					}
-				}
-			}
-		}
-	}
+                        // Once we have a world position we can transform it into a possible tile position.
+                        if let Some(tile_pos) = TilePos::from_world_pos(
+                            &cursor_in_map_pos_xy,
+                            map_size,
+                            grid_size,
+                            map_type,
+                        ) {
+                            cursor_state.click_pos = Some(tile_pos);
+                            cursor_state.pathfind_done = false;
+                            cursor_state.spawn_done = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

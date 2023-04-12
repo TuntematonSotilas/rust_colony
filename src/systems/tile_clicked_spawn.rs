@@ -19,38 +19,36 @@ pub fn tile_clicked_spawn(
 ) {
     if !tilemap_q.is_empty() && !cursor_state.spawn_done {
         if let Some(pos) = cursor_state.click_pos {
-        
-			for (map_transform, grid_size, map_type) in &tilemap_q {
-				if map_transform.translation.z == Z_MAP_BASE_LAYER {
-							
-					let world_pos = tile_to_world(pos, *grid_size, *map_type, map_transform);
+            for (map_transform, grid_size, map_type) in &tilemap_q {
+                if map_transform.translation.z == Z_MAP_BASE_LAYER {
+                    let world_pos = tile_to_world(pos, *grid_size, *map_type, map_transform);
 
-					let texture_handle = asset_server.load("/public/cursors/clicked.png");
-					let texture_atlas = TextureAtlas::from_grid(
-						texture_handle,
-						Vec2::new(CURSOR_SPRITE_SIZE, CURSOR_SPRITE_SIZE),
-						SPRITE_COL,
-						1,
-						None,
-						None,
-					);
-					let texture_atlas_handle = texture_atlases.add(texture_atlas);
+                    let texture_handle = asset_server.load("/public/cursors/clicked.png");
+                    let texture_atlas = TextureAtlas::from_grid(
+                        texture_handle,
+                        Vec2::new(CURSOR_SPRITE_SIZE, CURSOR_SPRITE_SIZE),
+                        SPRITE_COL,
+                        1,
+                        None,
+                        None,
+                    );
+                    let texture_atlas_handle = texture_atlases.add(texture_atlas);
 
-					commands.spawn((
-						ClickedTile,
-						SpriteSheetBundle {
-							texture_atlas: texture_atlas_handle,
-							transform: Transform {
-								translation: world_pos,
-								..default()
-							},
-							..default()
-						},
-						AnimationTimer(Timer::from_seconds(ANIM_DUR, TimerMode::Repeating)),
-					));
-					cursor_state.spawn_done = true;
-				}
-			}
-		}
-	}
+                    commands.spawn((
+                        ClickedTile,
+                        SpriteSheetBundle {
+                            texture_atlas: texture_atlas_handle,
+                            transform: Transform {
+                                translation: world_pos,
+                                ..default()
+                            },
+                            ..default()
+                        },
+                        AnimationTimer(Timer::from_seconds(ANIM_DUR, TimerMode::Repeating)),
+                    ));
+                    cursor_state.spawn_done = true;
+                }
+            }
+        }
+    }
 }

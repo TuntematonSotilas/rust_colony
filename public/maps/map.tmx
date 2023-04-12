@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
- <tileset firstgid="1" name="mars2" tilewidth="16" tileheight="16" tilecount="672" columns="28">
-  <image source="mars2.png" width="448" height="384"/>
+ <tileset firstgid="1" name="mars" tilewidth="16" tileheight="16" tilecount="672" columns="28">
+  <image source="mars.png" width="448" height="384"/>
  </tileset>
  <layer id="1" name="Calque de Tuiles 1" width="20" height="20">
   <data encoding="csv">
