@@ -22,6 +22,7 @@ fn setup(mut commands: Commands) {
 
     // 2d camera
     commands.spawn(Camera2dBundle::default());
+
 }
 
 // ------ ------
@@ -43,10 +44,10 @@ pub fn start() {
                     ..default()
                 }),
         )
-        /*/.add_plugin(TilemapPlugin)
+        .add_plugin(TilemapPlugin)
         .add_plugin(TiledMapPlugin)
         .add_plugin(MapPlugin)
-        .add_plugin(SoldierPlugin)*/
+        .add_plugin(SoldierPlugin)
         .add_plugin(UiPlugin)
         .add_startup_system(setup)
         .run();

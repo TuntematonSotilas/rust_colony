@@ -1,11 +1,13 @@
 use bevy::{prelude::*};
 
-use crate::systems::ui_spawn::ui_spawn;
+use crate::{systems::{ui_spawn::ui_spawn, button_system::button_system}, resources::game_state::GameState};
 
 pub struct UiPlugin;
 
 impl Plugin for UiPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(ui_spawn);
+        app.insert_resource(GameState { started: false, map_loaded: false })
+            .add_startup_system(ui_spawn)
+            .add_system(button_system);
     }
 }

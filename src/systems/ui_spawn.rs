@@ -1,7 +1,5 @@
 use bevy::{prelude::*};
 
-const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
-
 pub fn ui_spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands
         .spawn(NodeBundle {
@@ -17,23 +15,23 @@ pub fn ui_spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
             parent
                 .spawn(ButtonBundle {
                     style: Style {
-                        size: Size::new(Val::Px(150.0), Val::Px(65.0)),
+                        size: Size::new(Val::Px(94.0), Val::Px(30.0)),
                         // horizontally center child text
                         justify_content: JustifyContent::Center,
                         // vertically center child text
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: NORMAL_BUTTON.into(),
+                    image: UiImage::new(asset_server.load("/public/ui/button.png")),
                     ..default()
                 })
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
-                        "Button",
+                        "Start",
                         TextStyle {
-                            font: asset_server.load("/public/fonts/arial.ttf"),
-                            font_size: 40.0,
-                            color: Color::rgb(0.9, 0.9, 0.9),
+                            font: asset_server.load("/public/fonts/the_rift.otf"),
+                            font_size: 15.0,
+                            color: Color::hex("#ff0000").unwrap(),
                         },
                     ));
                 });
