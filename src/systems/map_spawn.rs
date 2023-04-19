@@ -10,7 +10,7 @@ pub fn map_spawn(
 ) {
     if game_state.started && !game_state.map_loaded {
         game_state.map_loaded = true;
-        let map_handle: Handle<TiledMap> = asset_server.load("/public/maps/map.tmx");
+        let map_handle: Handle<TiledMap> = asset_server.load("/public/maps/desert.tmx");
         commands.spawn(TiledMapBundle {
             tiled_map: map_handle,
             ..default()
