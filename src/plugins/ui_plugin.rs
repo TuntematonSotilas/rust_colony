@@ -6,8 +6,8 @@ pub struct UiPlugin;
 
 impl Plugin for UiPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(GameState { started: false, map_loaded: false })
-            .add_startup_system(ui_spawn)
-            .add_system(button_system);
+        app.insert_resource(GameState { started: false, map_loaded: false, ui_spawn: false })
+            .add_system(ui_spawn);
+            //.add_system(button_system);
     }
 }
