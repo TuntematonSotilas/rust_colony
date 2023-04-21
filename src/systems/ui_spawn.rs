@@ -54,6 +54,21 @@ pub fn ui_spawn(
         let parent_id = None;
         rsx! {
             <KayakAppBundle>
+                <KButtonBundle
+                    
+                    button={KButton {
+                        text: "Start".into(),
+                        ..Default::default()
+                    }}
+                    styles={KStyle {
+                        height: Units::Pixels(30.0).into(),
+                        left: Units::Stretch(1.0).into(),
+                        right: Units::Stretch(1.0).into(),
+                        font_size: StyleProp::Value(50.0).into(),
+                        color: StyleProp::Value(Color::hex("#ff0000").unwrap()),
+                        ..Default::default()
+                    }}
+                />
                 <TextWidgetBundle
                     styles={KStyle {
                         color: StyleProp::Value(Color::hex("#ff0000").unwrap()),
