@@ -40,7 +40,7 @@ pub fn start() {
                 .set(ImagePlugin::default_nearest())
                 .set(WindowPlugin {
                     primary_window: Some(Window {
-                        resolution: WindowResolution::new(800., 800.),
+                        resolution: WindowResolution::new(w, h),
                         ..default()
                     }),
                     ..default()

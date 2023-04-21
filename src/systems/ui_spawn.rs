@@ -1,8 +1,6 @@
+
 use bevy::{prelude::*, log};
-use kayak_ui::{
-    prelude::{widgets::*, *},
-    CameraUIKayak,
-};
+use kayak_ui::prelude::{widgets::*, *};
 
 use crate::resources::game_state::GameState;
 
@@ -28,7 +26,7 @@ impl Default for MenuButtonBundle {
                 ..Default::default()
             },
             on_event: OnEvent::default(),
-            widget_name: MenuButton::default().get_name(),
+            widget_name: WidgetName("MenuButton".to_string()),
         }
     }
 }
