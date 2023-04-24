@@ -6,7 +6,6 @@ pub fn map_spawn(
     mut game_state: ResMut<GameState>,
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    node_q: Query<Entity, &Node>,
 ) {
     if game_state.started && !game_state.map_loaded {
         game_state.map_loaded = true;
@@ -15,8 +14,5 @@ pub fn map_spawn(
             tiled_map: map_handle,
             ..default()
         });
-        for entity in &mut node_q.iter() {
-            commands.entity(entity).despawn();
-        }
     }
 }
