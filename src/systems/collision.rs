@@ -16,7 +16,7 @@ pub fn collision(
     tile_q: Query<&TilePos>,
     tilemap_q: Query<(&Transform, &TilemapType, &TilemapGridSize, &TileStorage)>,
 ) {
-    if !soldier_trsf_q.is_empty() && !tilemap_q.is_empty() {
+    if !soldier_trsf_q.is_empty() && !tilemap_q.is_empty() && !tile_q.is_empty() {
         let (mut soldier, soldier_trsf) = soldier_trsf_q.single_mut();
 
         for (map_transform, map_type, grid_size, tilemap_storage) in tilemap_q.iter() {
