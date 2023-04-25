@@ -2,7 +2,10 @@ use bevy::{prelude::*, window::WindowResolution};
 extern crate wasm_bindgen;
 use bevy_ecs_tilemap::TilemapPlugin;
 use kayak_ui::{prelude::KayakContextPlugin, widgets::KayakWidgets, CameraUIKayak};
-use plugins::{map_plugin::MapPlugin, soldier_plugin::SoldierPlugin, tiled_plugin::TiledMapPlugin, ui_plugin::UiPlugin};
+use plugins::{
+    map_plugin::MapPlugin, soldier_plugin::SoldierPlugin, tiled_plugin::TiledMapPlugin,
+    ui_plugin::UiPlugin,
+};
 use wasm_bindgen::prelude::*;
 
 mod components;
@@ -22,9 +25,9 @@ fn setup(mut commands: Commands) {
         .set_class_name("hide");
 
     // 2d camera
-    commands.spawn(Camera2dBundle::default())
+    commands
+        .spawn(Camera2dBundle::default())
         .insert(CameraUIKayak);
-
 }
 
 // ------ ------

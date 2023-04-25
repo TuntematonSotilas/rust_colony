@@ -1,5 +1,8 @@
-use bevy::{prelude::*};
-use crate::{resources::{game_state::GameState}, plugins::tiled_plugin::{TiledMap, TiledMapBundle}};
+use crate::{
+    plugins::tiled_plugin::{TiledMap, TiledMapBundle},
+    resources::game_state::GameState,
+};
+use bevy::prelude::*;
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn map_spawn(

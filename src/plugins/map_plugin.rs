@@ -3,8 +3,8 @@ use bevy::prelude::*;
 use crate::{
     resources::cursor_state::CursorState,
     systems::{
-        mouse_click::mouse_click, tile_clicked_animation::tile_clicked_animation,
-        tile_clicked_spawn::tile_clicked_spawn, map_spawn::map_spawn,
+        map_spawn::map_spawn, mouse_click::mouse_click,
+        tile_clicked_animation::tile_clicked_animation, tile_clicked_spawn::tile_clicked_spawn,
     },
 };
 
