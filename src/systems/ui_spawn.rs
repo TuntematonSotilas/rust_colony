@@ -2,7 +2,7 @@ use bevy::{log, prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
-    components::menu::{Menu, MenuState},
+    components::ui_menu::{Menu, MenuState},
     resources::game_state::GameState,
     systems::ui_menu::ui_menu,
 };
