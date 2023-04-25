@@ -27,7 +27,7 @@ pub fn soldier_spawn(
                 let tile_pos = TilePos { x: 25, y: 25 };
                 let world_pos = tile_to_world(tile_pos, *grid_size, *map_type, map_transform);
 
-                let texture_handle = asset_server.load("/public/sprites/soldier.png");
+                let texture_handle = asset_server.load("/public/sprites/gray.png");
                 let texture_atlas = TextureAtlas::from_grid(
                     texture_handle,
                     Vec2::new(SOLDIER_SPRITE_SIZE, SOLDIER_SPRITE_SIZE),
