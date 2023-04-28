@@ -9,10 +9,16 @@ pub fn ui_menu(
     mut commands: Commands,
     menu_state: Query<&MenuState>,
     game_state: Res<GameState>,
+    asset_server: Res<AssetServer>,
 ) -> bool {
     if !game_state.started {
+        
         let state_entity = widget_context.use_state(&mut commands, entity, MenuState::default());
+
         if menu_state.get(state_entity).is_ok() {
+        
+            let image = asset_server.load("/public/ui/menu.png");
+
             let on_click = OnEvent::new(
                 move |In((event_dispatcher_context, _, event, _entity)): In<(
                     EventDispatcherContext,
@@ -31,11 +37,25 @@ pub fn ui_menu(
             let parent_id = Some(entity);
             rsx! {
                 <ElementBundle>
+                    <KImageBundle
+                        image={KImage(image)}
+                        styles={KStyle {
+                            position_type: StyleProp::Value(KPositionType::SelfDirected),
+                            top: Units::Stretch(1.0).into(),
+                            bottom: Units::Stretch(1.0).into(),
+                            left: Units::Stretch(1.0).into(),
+                            right: Units::Stretch(1.0).into(),
+                            width: Units::Pixels(640.).into(),
+                            height: Units::Pixels(480.).into(),
+                            ..Default::default()
+                        }} 
+                    />
                     <KButtonBundle
                         button={KButton {
                             text: "Start".into(),
                         }}
                         styles={KStyle {
+                            position_type: StyleProp::Value(KPositionType::SelfDirected),
                             top: Units::Stretch(1.0).into(),
                             bottom: Units::Stretch(1.0).into(),
                             left: Units::Stretch(1.0).into(),
@@ -46,7 +66,7 @@ pub fn ui_menu(
                             ..Default::default()
                         }}
                         on_event = {on_click}
-                    />
+                    /> 
                 </ElementBundle>
             };
         }
