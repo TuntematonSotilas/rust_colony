@@ -22,20 +22,20 @@ pub fn collision(
         for (map_transform, map_type, grid_size, tilemap_storage) in tilemap_q.iter() {
             if map_transform.translation.z == Z_MAP_COLLIDE_LAYER {
                 for tile_entity in tilemap_storage.iter().flatten() {
-                    let tile_pos = tile_q.get(*tile_entity).unwrap();
-                    let wall_word_pos =
-                        tile_to_world(*tile_pos, *grid_size, *map_type, map_transform);
-                    if collide(
-                        soldier_trsf.translation,
-                        SOLDIER_SIZE,
-                        wall_word_pos,
-                        WALL_SIZE,
-                    )
-                    .is_some()
-                    {
-                        log::info!("collide");
-                        soldier.move_done = true;
-                        soldier.dir_set = false;
+                    if let Ok(tile_pos) = tile_q.get(*tile_entity) {
+                        let wall_word_pos = tile_to_world(*tile_pos, *grid_size, *map_type, map_transform);
+                        if collide(
+                            soldier_trsf.translation,
+                            SOLDIER_SIZE,
+                            wall_word_pos,
+                            WALL_SIZE,
+                        )
+                        .is_some()
+                        {
+                            log::info!("collide");
+                            soldier.move_done = true;
+                            soldier.dir_set = false;
+                        }
                     }
                 }
             }
