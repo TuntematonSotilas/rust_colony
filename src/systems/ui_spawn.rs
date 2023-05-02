@@ -3,7 +3,7 @@ use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
     components::ui_menu::{Menu, MenuState},
-    resources::game_state::GameState,
+    states::game_state::GameState,
     systems::ui_menu::ui_menu,
 };
 
@@ -28,12 +28,13 @@ pub fn ui_spawn(
     asset_server: Res<AssetServer>,
     mut font_mapping: ResMut<FontMapping>,
     camera_q: Query<Entity, With<CameraUIKayak>>,
-    mut game_state: ResMut<GameState>,
+    mut game_state: ResMut<State<GameState>>,
 ) {
-    if !game_state.ui_spawn && !camera_q.is_empty() {
-        game_state.ui_spawn = true;
+    if !camera_q.is_empty() && game_state.0 == GameState::MenuLoad {
 
-        log::info!("ui_spawn");
+		game_state.0 = GameState::Menu;
+		
+		log::info!("ui_spawn");
 
         let camera_entity = camera_q.single();
 

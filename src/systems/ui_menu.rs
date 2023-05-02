@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{components::ui_menu::MenuState, resources::game_state::GameState};
+use crate::{components::ui_menu::MenuState, states::game_state::GameState};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_menu(
@@ -9,10 +9,10 @@ pub fn ui_menu(
     widget_context: Res<KayakWidgetContext>,
     mut commands: Commands,
     menu_state: Query<&MenuState>,
-    game_state: Res<GameState>,
+    game_state: Res<State<GameState>>,
     asset_server: Res<AssetServer>,
 ) -> bool {
-    if !game_state.started {
+    if game_state.0 == GameState::Menu  {
         
         let state_entity = widget_context.use_state(&mut commands, entity, MenuState::default());
 
@@ -23,9 +23,9 @@ pub fn ui_menu(
             let on_click = OnEvent::new(
                 move |In(_entity): In<Entity>, 
                     event: Res<KEvent>,
-                    mut game_state: ResMut<GameState>| {
+                    mut game_state: ResMut<State<GameState>>| {
                         if let EventType::Click(..) = event.event_type {
-                            game_state.started = true;
+                            game_state.0 = GameState::MapLoad;
                         }
                     },
             );

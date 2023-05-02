@@ -4,12 +4,14 @@ use plugins::{
     map_plugin::MapPlugin, soldier_plugin::SoldierPlugin,
     ui_plugin::UiPlugin,
 };
+use states::game_state::GameState;
 use wasm_bindgen::prelude::*;
 
 mod components;
 mod plugins;
 mod resources;
 mod systems;
+mod states;
 mod utils;
 
 fn setup() {
@@ -31,6 +33,7 @@ pub fn start() {
     let (w, h) = get_window_size();
     App::new()
         .insert_resource(ClearColor(Color::rgb(0., 0., 0.)))
+		.add_state::<GameState>()
         .add_plugins(
             DefaultPlugins
                 .set(ImagePlugin::default_nearest())
