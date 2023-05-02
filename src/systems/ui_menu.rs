@@ -36,7 +36,7 @@ pub fn ui_menu(
                     <KImageBundle
                         image={KImage(image)}
                         styles={KStyle {
-                            position_type: StyleProp::Value(KPositionType::SelfDirected),
+                            position_type: KPositionType::SelfDirected.into(),
                             top: Units::Stretch(1.0).into(),
                             bottom: Units::Stretch(1.0).into(),
                             left: Units::Stretch(1.0).into(),
@@ -48,16 +48,20 @@ pub fn ui_menu(
                     />
                     <KButtonBundle
                         button={KButton {
-                            text: "Start".into(),
+                            text: "SINGLE PLAYER".into(),
                         }}
                         styles={KStyle {
-                            position_type: StyleProp::Value(KPositionType::SelfDirected),
-                            top: Units::Stretch(1.0).into(),
-                            bottom: Units::Stretch(1.0).into(),
-                            left: Units::Stretch(1.0).into(),
-                            right: Units::Stretch(1.0).into(),
-                            font_size: StyleProp::Value(15.0),
-                            color: StyleProp::Value(Color::hex("#ff0000").unwrap()),
+                            position_type: KPositionType::SelfDirected.into(),
+                            top: Units::Stretch(1.).into(),
+                            bottom: Units::Stretch(1.).into(),
+                            left: Units::Stretch(1.).into(),
+                            right: Units::Stretch(1.).into(),
+							width: Units::Percentage(20.).into(),
+							background_color: Color::hex("#000").unwrap().into(),
+                            font_size: (20.).into(),
+                            color: Color::hex("#ff0000").unwrap().into(),
+							border_color: Color::hex("#ff0000").unwrap().into(),
+							border_radius: Corner::all(0.).into(),
                             cursor: KCursorIcon::default().into(),
                             ..Default::default()
                         }}
