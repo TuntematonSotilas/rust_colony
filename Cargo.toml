@@ -23,7 +23,7 @@ bevy_ecs_tilemap = { version = "0.10.0", features = ["atlas", "render"] }
 tiled = { version = "0.10.2", default-features = false }
 web-sys = { version = "0.3.61", features = ["Window", "Document", "Element"] }
 pathfinding = "4.2.1"
-kayak_ui = "0.3.0"
+kayak_ui = "0.4.1"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.34"

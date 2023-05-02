@@ -5,7 +5,8 @@ use crate::{components::ui_menu::MenuState, resources::game_state::GameState};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_menu(
-    In((widget_context, entity)): In<(KayakWidgetContext, Entity)>,
+    In(entity): In<Entity>,
+    widget_context: Res<KayakWidgetContext>,
     mut commands: Commands,
     menu_state: Query<&MenuState>,
     game_state: Res<GameState>,
@@ -20,18 +21,13 @@ pub fn ui_menu(
             let image = asset_server.load("/public/ui/menu.png");
 
             let on_click = OnEvent::new(
-                move |In((event_dispatcher_context, _, event, _entity)): In<(
-                    EventDispatcherContext,
-                    WidgetState,
-                    KEvent,
-                    Entity,
-                )>,
-                      mut game_state: ResMut<GameState>| {
-                    if let EventType::Click(..) = event.event_type {
-                        game_state.started = true;
-                    }
-                    (event_dispatcher_context, event)
-                },
+                move |In(_entity): In<Entity>, 
+                    event: Res<KEvent>,
+                    mut game_state: ResMut<GameState>| {
+                        if let EventType::Click(..) = event.event_type {
+                            game_state.started = true;
+                        }
+                    },
             );
 
             let parent_id = Some(entity);
@@ -60,7 +56,7 @@ pub fn ui_menu(
                             bottom: Units::Stretch(1.0).into(),
                             left: Units::Stretch(1.0).into(),
                             right: Units::Stretch(1.0).into(),
-                            font_size: StyleProp::Value(20.0),
+                            font_size: StyleProp::Value(15.0),
                             color: StyleProp::Value(Color::hex("#ff0000").unwrap()),
                             cursor: KCursorIcon::default().into(),
                             ..Default::default()
