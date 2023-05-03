@@ -2,25 +2,11 @@ use bevy::{log, prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
-    components::ui_menu::{Menu, MenuState},
+    components::{ui_menu::{Menu, MenuState, MenuBundle}, ui_button::{UiButton, UiButtonState}},
     states::game_state::GameState,
-    systems::ui_menu::ui_menu,
+    systems::{ui_menu::ui_menu, ui_button::ui_button},
 };
 
-#[derive(Bundle)]
-pub struct MenuBundle {
-    pub menu: Menu,
-    pub widget_name: WidgetName,
-}
-
-impl Default for MenuBundle {
-    fn default() -> Self {
-        Self {
-            menu: Menu::default(),
-            widget_name: Menu::default().get_name(),
-        }
-    }
-}
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_spawn(
@@ -47,6 +33,12 @@ pub fn ui_spawn(
             Menu::default().get_name(),
             widget_update::<Menu, MenuState>,
             ui_menu,
+        );
+
+        widget_context.add_widget_system(
+            UiButton::default().get_name(),
+            widget_update::<UiButton, UiButtonState>,
+            ui_button,
         );
 
         let parent_id = None;

@@ -8,5 +8,6 @@ pub mod soldier_pathfind;
 pub mod soldier_spawn;
 pub mod tile_clicked_animation;
 pub mod tile_clicked_spawn;
-pub mod ui_menu;
 pub mod ui_spawn;
+pub mod ui_menu;
+pub mod ui_button;

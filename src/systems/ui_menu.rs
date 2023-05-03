@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{components::ui_menu::MenuState, states::game_state::GameState};
+use crate::{components::{ui_menu::{MenuState}, ui_button::UiButtonBundle}, states::game_state::GameState};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_menu(
@@ -15,20 +15,10 @@ pub fn ui_menu(
     if game_state.0 == GameState::Menu  {
         
         let state_entity = widget_context.use_state(&mut commands, entity, MenuState::default());
-
-        if menu_state.get(state_entity).is_ok() {
         
+        if menu_state.get(state_entity).is_ok() {
+            
             let image = asset_server.load("/public/ui/menu.png");
-
-            let on_click = OnEvent::new(
-                move |In(_entity): In<Entity>, 
-                    event: Res<KEvent>,
-                    mut game_state: ResMut<State<GameState>>| {
-                        if let EventType::Click(..) = event.event_type {
-                            game_state.0 = GameState::MapLoad;
-                        }
-                    },
-            );
 
             let parent_id = Some(entity);
             rsx! {
@@ -46,27 +36,7 @@ pub fn ui_menu(
                             ..Default::default()
                         }} 
                     />
-                    <KButtonBundle
-                        button={KButton {
-                            text: "SINGLE PLAYER".into(),
-                        }}
-                        styles={KStyle {
-                            position_type: KPositionType::SelfDirected.into(),
-                            top: Units::Stretch(1.).into(),
-                            bottom: Units::Stretch(1.).into(),
-                            left: Units::Stretch(1.).into(),
-                            right: Units::Stretch(1.).into(),
-							width: Units::Percentage(20.).into(),
-							background_color: Color::hex("#000").unwrap().into(),
-                            font_size: (20.).into(),
-                            color: Color::hex("#ff0000").unwrap().into(),
-							border_color: Color::hex("#ff0000").unwrap().into(),
-							border_radius: Corner::all(0.).into(),
-                            cursor: KCursorIcon::default().into(),
-                            ..Default::default()
-                        }}
-                        on_event = {on_click}
-                    /> 
+                    <UiButtonBundle />
                 </ElementBundle>
             };
         }
