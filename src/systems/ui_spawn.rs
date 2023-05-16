@@ -1,4 +1,4 @@
-use bevy::{log, prelude::*};
+use bevy::{prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
