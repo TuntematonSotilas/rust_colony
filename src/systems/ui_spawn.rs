@@ -2,9 +2,9 @@ use bevy::{log, prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
-    components::{ui_menu::{Menu, MenuState, MenuBundle}, ui_button::{UiButton, UiButtonState}},
+    components::{ui_main_menu::{MainMenu, MainMenuState, MainMenuBundle}, ui_button::{UiButton, UiButtonState}},
     states::game_state::GameState,
-    systems::{ui_menu::ui_menu, ui_button::ui_button},
+    systems::{ui_main_menu::ui_main_menu, ui_button::ui_button},
 };
 
 
@@ -18,10 +18,8 @@ pub fn ui_spawn(
 ) {
     if !camera_q.is_empty() && game_state.0 == GameState::MenuLoad {
 
-		game_state.0 = GameState::Menu;
+		game_state.0 = GameState::MainMenu;
 		
-		log::info!("ui_spawn");
-
         let camera_entity = camera_q.single();
 
         font_mapping.set_default(asset_server.load("/public/fonts/ace_futurism.kttf"));
@@ -30,9 +28,9 @@ pub fn ui_spawn(
         widget_context.add_plugin(KayakWidgetsContextPlugin);
 
         widget_context.add_widget_system(
-            Menu::default().get_name(),
-            widget_update::<Menu, MenuState>,
-            ui_menu,
+            MainMenu::default().get_name(),
+            widget_update::<MainMenu, MainMenuState>,
+            ui_main_menu,
         );
 
         widget_context.add_widget_system(
@@ -44,7 +42,7 @@ pub fn ui_spawn(
         let parent_id = None;
         rsx! {
             <KayakAppBundle>
-               <MenuBundle />
+               <MainMenuBundle />
             </KayakAppBundle>
         };
 

@@ -1,20 +1,20 @@
 use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{components::{ui_menu::{MenuState}, ui_button::UiButtonBundle}, states::game_state::GameState};
+use crate::{components::{ui_main_menu::{MainMenuState}, ui_button::UiButtonBundle}, states::game_state::GameState};
 
 #[allow(clippy::needless_pass_by_value)]
-pub fn ui_menu(
+pub fn ui_main_menu(
     In(entity): In<Entity>,
     widget_context: Res<KayakWidgetContext>,
     mut commands: Commands,
-    menu_state: Query<&MenuState>,
+    menu_state: Query<&MainMenuState>,
     game_state: Res<State<GameState>>,
     asset_server: Res<AssetServer>,
 ) -> bool {
-    if game_state.0 == GameState::Menu  {
+    if game_state.0 == GameState::MainMenu  {
         
-        let state_entity = widget_context.use_state(&mut commands, entity, MenuState::default());
+        let state_entity = widget_context.use_state(&mut commands, entity, MainMenuState::default());
         
         if menu_state.get(state_entity).is_ok() {
             

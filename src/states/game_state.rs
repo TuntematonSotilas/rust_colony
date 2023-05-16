@@ -4,7 +4,7 @@ use bevy::prelude::States;
 pub enum GameState {
     #[default]
 	MenuLoad,
-    Menu,
+    MainMenu,
 	MapLoad,
     InGame,
 }

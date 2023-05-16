@@ -8,27 +8,43 @@ pub fn ui_button(
     In(entity): In<Entity>,
     widget_context: Res<KayakWidgetContext>,
     mut commands: Commands,
-    button_state: Query<&UiButtonState>,
+    state_query: Query<&UiButtonState>,
 ) -> bool {
         
     let state_entity = widget_context.use_state(&mut commands, entity, UiButtonState::default());
 
-    if button_state.get(state_entity).is_ok() {
+    if let Ok(state) = state_query.get(state_entity) {
     
-        let on_click = OnEvent::new(
+        let on_event = OnEvent::new(
             move |In(_entity): In<Entity>, 
-                event: Res<KEvent>,
-                mut game_state: ResMut<State<GameState>>| {
-                    match event.event_type {
-                        EventType::Click(..) => {
-                            game_state.0 = GameState::MapLoad;
+                mut event: ResMut<KEvent>,
+                mut game_state: ResMut<State<GameState>>,
+                mut query: Query<&mut UiButtonState>| {
+                    if let Ok(mut button) = query.get_mut(state_entity) {
+                        match event.event_type {
+                            EventType::MouseIn(..) => {
+                                event.stop_propagation();
+                                button.hovering = true;
+                            }
+                            EventType::MouseOut(..) => {
+                                button.hovering = false;
+                            }
+                            EventType::Click(..) => {
+                                game_state.0 = GameState::MapLoad;
+                            }
+                            _ => {} 
                         }
-                        _ => {} 
                     }
                 },
         );
 
         let parent_id = Some(entity);
+
+        let color = match state.hovering {
+            true => Color::hex("#ff0000").unwrap(),
+            false => Color::hex("#953500").unwrap(),
+        };
+
         rsx! {
             <KButtonBundle
                 button={KButton {
@@ -43,13 +59,13 @@ pub fn ui_button(
                     width: Units::Percentage(20.).into(),
                     background_color: Color::hex("#000").unwrap().into(),
                     font_size: (20.).into(),
-                    color: Color::hex("#ff0000").unwrap().into(),
-                    border_color: Color::hex("#ff0000").unwrap().into(),
+                    color: color.into(),
+                    border_color: color.into(),
                     border_radius: Corner::all(0.).into(),
                     cursor: KCursorIcon::default().into(),
                     ..Default::default()
                 }}
-                on_event = {on_click}
+                on_event = {on_event}
             /> 
         };
     }

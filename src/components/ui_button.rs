@@ -7,7 +7,9 @@ pub struct UiButton {}
 impl Widget for UiButton {}
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
-pub struct UiButtonState {}
+pub struct UiButtonState {
+    pub hovering: bool,
+}
 
 #[derive(Bundle)]
 pub struct UiButtonBundle {
