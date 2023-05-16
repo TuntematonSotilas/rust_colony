@@ -5,6 +5,7 @@ pub enum GameState {
     #[default]
 	MenuLoad,
     MainMenu,
+    NewGameMenu,
 	MapLoad,
     InGame,
 }

@@ -2,7 +2,10 @@ use bevy::prelude::{Component, Bundle};
 use kayak_ui::prelude::{Widget, WidgetName};
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
-pub struct UiButton {}
+pub struct UiButton {
+    pub is_select: bool,
+    pub text: String
+}
 
 impl Widget for UiButton {}
 
@@ -13,14 +16,14 @@ pub struct UiButtonState {
 
 #[derive(Bundle)]
 pub struct UiButtonBundle {
-    pub menu: UiButton,
+    pub ui_button: UiButton,
     pub widget_name: WidgetName,
 }
 
 impl Default for UiButtonBundle {
     fn default() -> Self {
         Self {
-            menu: UiButton::default(),
+            ui_button: UiButton::default(),
             widget_name: UiButton::default().get_name(),
         }
     }
