@@ -40,12 +40,57 @@ pub fn ui_main_menu(
                                             ..Default::default()
                                         }} 
                                     />
-                                    <UiButtonBundle ui_button={UiButton { is_select: false, text: "SINGLE PLAYER".to_string() }} />
+                                    <UiButtonBundle ui_button={UiButton { text: "SINGLE PLAYER".to_string() }} />
                                 </ElementBundle>
                             }
                         } else {
+                            //TODO : move this in a new component ui_select
                             constructor! {
-                                <UiButtonBundle ui_button={UiButton { is_select: true, text: "READY".to_string() }} />
+                                <ElementBundle>
+                                    <BackgroundBundle
+                                        styles={KStyle {
+                                            position_type: KPositionType::SelfDirected.into(),
+                                            top: Units::Pixels(0.).into(),
+                                            left: Units::Pixels(0.).into(),
+                                            width: Units::Percentage(100.).into(),
+                                            height: Units::Percentage(100.).into(),
+                                            border: Edge::from((2.,2.,2.,2.)).into(),
+                                            border_color: Color::hex("#414141").unwrap().into(),
+                                            background_color: Color::hex("#000").unwrap().into(),
+                                            ..Default::default()
+                                        }}/>
+                                    <ElementBundle>
+                                        <BackgroundBundle
+                                            styles={KStyle {
+                                                position_type: KPositionType::ParentDirected.into(),
+                                                top: Units::Percentage(50.).into(),
+                                                left: Units::Percentage(40.).into(),
+                                                width: Units::Percentage(10.).into(),
+                                                height: Units::Percentage(5.).into(),
+                                                border: Edge::from((2.,2.,2.,2.)).into(),
+                                                border_color: Color::hex("#6a6a6a").unwrap().into(),
+                                                background_color: Color::hex("#000").unwrap().into(),
+                                                ..Default::default()
+                                            }}>
+                                            <ElementBundle>
+                                                <TextWidgetBundle
+                                                    styles={KStyle {
+                                                        top: Units::Stretch(1.).into(),
+                                                        left: Units::Stretch(1.).into(),
+                                                        right: Units::Stretch(1.).into(),
+                                                        font_size: (20.).into(),
+                                                        color: Color::hex("#6bf500").unwrap().into(),
+                                                        ..Default::default()
+                                                    }}    
+                                                    text={TextProps {
+                                                        content: "Human".into(),
+                                                        ..Default::default()
+                                                    }}/>
+                                            </ElementBundle>
+                                        </BackgroundBundle>
+                                    </ElementBundle>
+                                </ElementBundle>
+                                
                             }
                         }
                     }

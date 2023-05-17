@@ -3,7 +3,6 @@ use kayak_ui::prelude::{Widget, WidgetName};
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
 pub struct UiButton {
-    pub is_select: bool,
     pub text: String
 }
 
