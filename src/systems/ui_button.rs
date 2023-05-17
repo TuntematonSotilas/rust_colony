@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, log};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{states::game_state::GameState, components::ui_button::{UiButtonState, UiButton}};
@@ -27,12 +27,15 @@ pub fn ui_button(
                             match event.event_type {
                                 EventType::MouseIn(..) => {
                                     event.stop_propagation();
+                                    log::info!("mousein");
                                     button.hovering = true;
                                 }
                                 EventType::MouseOut(..) => {
+                                    log::info!("mouseout");
                                     button.hovering = false;
                                 }
                                 EventType::Click(..) => {
+                                    log::info!("clic");
                                     if game_state.0 == GameState::MainMenu {
                                         game_state.0 = GameState::NewGameMenu;
                                     } else {
