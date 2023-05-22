@@ -22,7 +22,7 @@ pub fn ui_spawn(
 		
         let camera_entity = camera_q.single();
 
-        font_mapping.set_default(asset_server.load("/public/fonts/ace_futurism.kttf"));
+        font_mapping.set_default(asset_server.load("/public/fonts/monorita.kttf"));
 
         let mut widget_context = KayakRootContext::new(camera_entity);
         widget_context.add_plugin(KayakWidgetsContextPlugin);

@@ -15,7 +15,7 @@ fn startup(mut commands: Commands,
         .insert(CameraUIKayak)
         .id();
 
-    font_mapping.set_default(asset_server.load("ace_futurism.kttf"));
+    font_mapping.set_default(asset_server.load("C:\\projet\\rust_colony\\public\\fonts\\monorita.kttf"));
 
     let parent_id = None;
 

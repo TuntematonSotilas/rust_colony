@@ -58,14 +58,13 @@ pub fn ui_button(
                         text: ui_button.text.clone(),
                     }}
                     styles={KStyle {
-                        position_type: KPositionType::ParentDirected.into(),
                         top: Units::Stretch(1.).into(),
                         bottom: Units::Stretch(1.).into(),
                         left: Units::Stretch(1.).into(),
                         right: Units::Stretch(1.).into(),
                         width: Units::Percentage(20.).into(),
                         background_color: Color::hex("#000").unwrap().into(),
-                        font_size: (20.).into(),
+                        font_size: (15.).into(),
                         color: color.into(),
                         border_color: color.into(),
                         border_radius: Corner::all(0.).into(),

@@ -38,8 +38,7 @@ pub fn ui_main_menu(
                                             width: Units::Pixels(640.).into(),
                                             height: Units::Pixels(480.).into(),
                                             ..Default::default()
-                                        }} 
-                                    />
+                                        }}/>
                                     <UiButtonBundle ui_button={UiButton { text: "SINGLE PLAYER".to_string() }} />
                                 </ElementBundle>
                             }
@@ -96,9 +95,10 @@ pub fn ui_main_menu(
 										layout_type: LayoutType::Grid.into(),
 										grid_rows: vec![Units::Stretch(1.0), Units::Stretch(1.0)].into(),
 										grid_cols: vec![Units::Stretch(1.0)].into(),
+                                        left: Units::Stretch(1.).into(),
+                                        right: Units::Stretch(1.).into(),
 										..default()
-									}}
-								>
+									}}>
 									
 									<TextWidgetBundle
 										text={TextProps {
@@ -111,18 +111,14 @@ pub fn ui_main_menu(
 											..default()
 										}}
 									/>
-									<TextWidgetBundle
-										text={TextProps {
-											content: "R1 C1".into(),
-											..default()
-										}}
-										styles={KStyle{
-											row_index: 1.into(),
-											col_index: 0.into(),
-											..default()
-										}}
-									/>
-									
+                                    <ElementBundle
+                                        styles={KStyle{
+                                            row_index: 1.into(),
+                                            col_index: 0.into(),
+                                            ..default()
+                                        }}>
+                                        <UiButtonBundle ui_button={UiButton { text: "READY".to_string() }} />
+									</ElementBundle>
 								</ElementBundle>
 
                                 
