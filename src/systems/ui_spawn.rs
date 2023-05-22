@@ -2,9 +2,9 @@ use bevy::{prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
-    components::{ui_main_menu::{MainMenu, MainMenuState, MainMenuBundle}, ui_button::{UiButton, UiButtonState}},
+    components::{ui_main_menu::{MainMenu, MainMenuState, MainMenuBundle}, ui_button::{UiButton, UiButtonState}, ui_select::{UiSelectState, UiSelect}},
     states::game_state::GameState,
-    systems::{ui_main_menu::ui_main_menu, ui_button::ui_button},
+    systems::{ui_main_menu::ui_main_menu, ui_button::ui_button, ui_select::ui_select},
 };
 
 
@@ -37,6 +37,12 @@ pub fn ui_spawn(
             UiButton::default().get_name(),
             widget_update::<UiButton, UiButtonState>,
             ui_button,
+        );
+
+        widget_context.add_widget_system(
+            UiSelect::default().get_name(),
+            widget_update::<UiSelect, UiSelectState>,
+            ui_select,
         );
 
         let parent_id = None;
