@@ -2,9 +2,7 @@ use bevy::prelude::{Component, Bundle};
 use kayak_ui::prelude::{Widget, WidgetName};
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
-pub struct UiSelect {
-    pub text: String
-}
+pub struct UiSelect {}
 
 impl Widget for UiSelect {}
 

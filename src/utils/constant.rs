@@ -6,3 +6,8 @@ pub const Z_UNIT: f32 = 3.;
 
 pub const SOLDIER_SPRITE_SIZE: f32 = 50.;
 pub const SOLDIER_SPRITE_NB: usize = 27;
+
+pub const BLACK: &str = "#000";
+pub const DARK_RED: &str = "#953500";
+pub const LIGHT_RED: &str = "#ff0000";
+pub const GREEN: &str = "#6bf500";

@@ -1,7 +1,7 @@
 use bevy::{prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{states::game_state::GameState, components::ui_button::{UiButtonState, UiButton}};
+use crate::{states::game_state::GameState, components::ui_button::{UiButtonState, UiButton}, utils::constant::{DARK_RED, LIGHT_RED, BLACK}};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_button(
@@ -48,8 +48,8 @@ pub fn ui_button(
             let parent_id = Some(entity);
 
             let color = match state.hovering {
-                true => Color::hex("#ff0000").unwrap(),
-                false => Color::hex("#953500").unwrap(),
+                true => Color::hex(LIGHT_RED).unwrap(),
+                false => Color::hex(DARK_RED).unwrap(),
             };
 
             rsx! {
@@ -63,7 +63,7 @@ pub fn ui_button(
                         left: Units::Stretch(1.).into(),
                         right: Units::Stretch(1.).into(),
                         width: Units::Percentage(20.).into(),
-                        background_color: Color::hex("#000").unwrap().into(),
+                        background_color: Color::hex(BLACK).unwrap().into(),
                         font_size: (15.).into(),
                         color: color.into(),
                         border_color: color.into(),
@@ -71,8 +71,7 @@ pub fn ui_button(
                         cursor: KCursorIcon::default().into(),
                         ..Default::default()
                     }}
-                    on_event = {on_event}
-                /> 
+                    on_event = {on_event} /> 
             };
         }
     }
