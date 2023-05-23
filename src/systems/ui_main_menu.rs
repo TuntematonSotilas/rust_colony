@@ -14,17 +14,21 @@ pub fn ui_main_menu(
 ) -> bool {
     if game_state.0 == GameState::MainMenu || game_state.0 == GameState::NewGameMenu {
         
+		let parent_id = Some(entity);
+
         let state_entity = widget_context.use_state(&mut commands, entity, MainMenuState::default());
         
         if menu_state.get(state_entity).is_ok() {
-            
-            let image = asset_server.load("/public/ui/menu.png");
+			
+			let mut image: Option<Handle<bevy::prelude::Image>> = None;
+			if game_state.0 == GameState::MainMenu {
+				image = Some(asset_server.load("/public/ui/menu.png"));
+			}
 
-            let parent_id = Some(entity);
             rsx! {
                 <ElementBundle>
                     {
-                        if game_state.0 == GameState::MainMenu {
+                        if game_state.0 == GameState::MainMenu && image.is_some() {
                             constructor! {
                                 <ElementBundle
                                     styles={KStyle{
@@ -32,19 +36,19 @@ pub fn ui_main_menu(
                                         right: Units::Stretch(1.).into(),
                                         ..default()
                                     }}>
-                                   <KImageBundle
-                                        image={KImage(image)}
-                                        styles={KStyle {
-                                            position_type: KPositionType::SelfDirected.into(),
-                                            top: Units::Stretch(1.0).into(),
-                                            bottom: Units::Stretch(1.0).into(),
-                                            left: Units::Stretch(1.0).into(),
-                                            right: Units::Stretch(1.0).into(),
-                                            width: Units::Pixels(640.).into(),
-                                            height: Units::Pixels(480.).into(),
-                                            ..Default::default()
-                                        }} />
-
+									<KImageBundle
+										image={KImage(image.unwrap())}
+										styles={KStyle {
+											position_type: KPositionType::SelfDirected.into(),
+											top: Units::Stretch(1.0).into(),
+											bottom: Units::Stretch(1.0).into(),
+											left: Units::Stretch(1.0).into(),
+											right: Units::Stretch(1.0).into(),
+											width: Units::Pixels(640.).into(),
+											height: Units::Pixels(480.).into(),
+											..Default::default()
+										}} />
+								
                                     <ElementBundle
                                         styles={KStyle{
                                             position_type: KPositionType::SelfDirected.into(),
