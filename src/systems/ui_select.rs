@@ -46,7 +46,7 @@ pub fn ui_select(
             false => Color::hex(DARK_RED).unwrap(),
         };
 
-        let image: Handle<Image> = asset_server.load("/public/ui/menu.png");
+        let pic_human: Handle<Image> = asset_server.load("/public/ui/human.png");
 
 
         rsx! {
@@ -93,21 +93,20 @@ pub fn ui_select(
                         background_color: Color::hex(BLACK).unwrap().into(),
                         ..Default::default()
                     }}
-                    >
-                    //on_event = {on_event}> 
-
+                    on_event = {on_event}> 
+                    
                     <KImageBundle
-                                        image={KImage(image)}
-                                        styles={KStyle {
-                                            position_type: KPositionType::SelfDirected.into(),
-                                            top: Units::Stretch(1.0).into(),
-                                            bottom: Units::Stretch(1.0).into(),
-                                            left: Units::Stretch(1.0).into(),
-                                            right: Units::Stretch(1.0).into(),
-                                            width: Units::Pixels(10.).into(),
-                                            height: Units::Pixels(10.).into(),
-                                            ..Default::default()
-                                        }} />
+                        image={KImage(pic_human)}
+                        styles={KStyle {
+                            position_type: KPositionType::SelfDirected.into(),
+                            top: Units::Stretch(1.0).into(),
+                            bottom: Units::Stretch(1.0).into(),
+                            left: Units::Stretch(1.0).into(),
+                            right: Units::Stretch(1.0).into(),
+                            width: Units::Pixels(10.).into(),
+                            height: Units::Pixels(10.).into(),
+                            ..Default::default()
+                        }} />
 
                 </BackgroundBundle> 
             </ElementBundle>
