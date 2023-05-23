@@ -4,7 +4,7 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::resources::soldiers_state::SoldiersState;
+use crate::resources::{soldiers_state::SoldiersState, player_state::{PlayerState, PlayerRace}};
 use crate::{
     components::animation_timer::AnimationTimer,
     utils::constant::{SOLDIER_SPRITE_NB, SOLDIER_SPRITE_SIZE, Z_MAP_BASE_LAYER},
@@ -20,14 +20,19 @@ pub fn soldier_spawn(
     tilemap_q: Query<(&Transform, &TilemapGridSize, &TilemapType)>,
     mut soldiers_state: ResMut<SoldiersState>,
     mut texture_atlases: ResMut<Assets<TextureAtlas>>,
+    player_state: Res<PlayerState>,
 ) {
     if !tilemap_q.is_empty() && !soldiers_state.spawn_done {
         for (map_transform, grid_size, map_type) in &tilemap_q {
             if map_transform.translation.z == Z_MAP_BASE_LAYER {
                 let tile_pos = TilePos { x: 25, y: 25 };
                 let world_pos = tile_to_world(tile_pos, *grid_size, *map_type, map_transform);
-
-                let texture_handle = asset_server.load("/public/sprites/gray.png");
+                
+                let sprite_name = match player_state.player_race {
+                    PlayerRace::Human => "human",
+                    PlayerRace::Gray => "gray"
+                };
+                let texture_handle = asset_server.load(format!("/public/sprites/{}.png", sprite_name));
                 let texture_atlas = TextureAtlas::from_grid(
                     texture_handle,
                     Vec2::new(SOLDIER_SPRITE_SIZE, SOLDIER_SPRITE_SIZE),

@@ -11,3 +11,4 @@ pub const BLACK: &str = "#000";
 pub const DARK_RED: &str = "#953500";
 pub const LIGHT_RED: &str = "#ff0000";
 pub const GREEN: &str = "#6bf500";
+pub const SAND: &str = "#c48854";
