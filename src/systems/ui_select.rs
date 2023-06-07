@@ -71,6 +71,7 @@ pub fn ui_select(
                     layout_type: LayoutType::Grid.into(),
                     grid_rows: vec![Units::Pixels(25.0)].into(),
                     grid_cols: vec![Units::Pixels(50.0), Units::Pixels(30.0)].into(),
+                    padding: (Edge::new(Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(30.))).into(),
                     ..default()
                 }}>
                 
