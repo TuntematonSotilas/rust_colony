@@ -13,3 +13,4 @@ pub const LIGHT_RED: &str = "#ff0000";
 pub const GREEN: &str = "#6bf500";
 pub const SAND: &str = "#c48854";
 pub const GREY: &str = "#686868";
+pub const BLUE: &str = "#0ff8fc";

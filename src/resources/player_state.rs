@@ -7,6 +7,12 @@ pub enum PlayerRace {
     Gray,
 }
 
+#[derive(Default, Clone, Eq, PartialEq)]
+pub enum PlayerMap {
+    #[default]
+    Jungle,
+    Desert,
+}
 
 #[derive(Resource)]
 pub struct PlayerState {

@@ -104,7 +104,7 @@ pub fn ui_main_menu(
                                <ElementBundle
 									styles={KStyle{
 										layout_type: LayoutType::Grid.into(),
-										grid_rows: vec![Units::Pixels(40.), Units::Pixels(100.), Units::Pixels(40.)].into(),
+										grid_rows: vec![Units::Pixels(40.), Units::Pixels(120.), Units::Pixels(40.)].into(),
 										grid_cols: vec![Units::Stretch(1.)].into(),
                                         left: Units::Stretch(1.).into(),
                                         right: Units::Stretch(1.).into(),
