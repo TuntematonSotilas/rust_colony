@@ -22,10 +22,11 @@ pub fn ui_list(
                 styles={KStyle {
                     left: Units::Stretch(1.).into(),
                     right: Units::Stretch(1.).into(),
-                    width: Units::Stretch(1.).into(),
+                    width: Units::Percentage(100.).into(),
                     height: Units::Pixels(100.).into(),
                     border: Edge::all(1.).into(),
                     border_color: Color::hex(GREY).unwrap().into(),
+                    border_radius: Corner::all(4.).into(),
                     background_color: Color::hex(BLACK).unwrap().into(),
                     ..Default::default()
                 }}> 
