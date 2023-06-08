@@ -104,11 +104,11 @@ pub fn ui_main_menu(
                                <ElementBundle
 									styles={KStyle{
 										layout_type: LayoutType::Grid.into(),
-										grid_rows: vec![Units::Pixels(40.), Units::Pixels(40.), Units::Pixels(40.)].into(),
+										grid_rows: vec![Units::Pixels(40.), Units::Pixels(100.), Units::Pixels(40.)].into(),
 										grid_cols: vec![Units::Stretch(1.)].into(),
                                         left: Units::Stretch(1.).into(),
                                         right: Units::Stretch(1.).into(),
-                                        padding: (Edge::new(Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.))).into(),
+                                        padding: (Edge::new(Units::Pixels(40.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.))).into(),
 										..default()
 									}}>
 									<ElementBundle
@@ -123,7 +123,6 @@ pub fn ui_main_menu(
 									</ElementBundle>
                                     <ElementBundle
                                         styles={KStyle{
-                                            padding: (Edge::new(Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.))).into(),
                                             row_index: 1.into(),
                                             col_index: 0.into(),
                                             left: Units::Stretch(1.).into(),
@@ -134,7 +133,6 @@ pub fn ui_main_menu(
 									</ElementBundle>
                                     <ElementBundle
                                         styles={KStyle{
-                                            padding: (Edge::new(Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.))).into(),
                                             row_index: 2.into(),
                                             col_index: 0.into(),
                                             left: Units::Stretch(1.).into(),
