@@ -17,4 +17,5 @@ pub enum PlayerMap {
 #[derive(Resource)]
 pub struct PlayerState {
     pub player_race: PlayerRace,
+    pub player_map: PlayerMap,
 }
