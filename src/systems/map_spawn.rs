@@ -1,11 +1,12 @@
 use crate::{
-    plugins::tiled_plugin::{TiledMap, TiledMapBundle}, states::game_state::GameState,
+    plugins::tiled_plugin::{TiledMap, TiledMapBundle},
+    states::game_state::GameState,
 };
 use bevy::prelude::*;
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn map_spawn(
-	mut game_state: ResMut<State<GameState>>,
+    mut game_state: ResMut<State<GameState>>,
     mut commands: Commands,
     asset_server: Res<AssetServer>,
 ) {

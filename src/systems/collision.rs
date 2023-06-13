@@ -23,7 +23,8 @@ pub fn collision(
             if map_transform.translation.z == Z_MAP_COLLIDE_LAYER {
                 for tile_entity in tilemap_storage.iter().flatten() {
                     if let Ok(tile_pos) = tile_q.get(*tile_entity) {
-                        let wall_word_pos = tile_to_world(*tile_pos, *grid_size, *map_type, map_transform);
+                        let wall_word_pos =
+                            tile_to_world(*tile_pos, *grid_size, *map_type, map_transform);
                         if collide(
                             soldier_trsf.translation,
                             SOLDIER_SIZE,

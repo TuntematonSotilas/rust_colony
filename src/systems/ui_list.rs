@@ -1,7 +1,11 @@
-use bevy::{prelude::*};
+use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{utils::constant::{GREY, BLACK}, components::{ui_list_line::{UiListLineBundle, UiListLine}}, resources::player_state::{PlayerMap}};
+use crate::{
+    components::ui_list_line::{UiListLine, UiListLineBundle},
+    resources::player_state::PlayerMap,
+    utils::constant::{BLACK, GREY},
+};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_list(
@@ -9,9 +13,8 @@ pub fn ui_list(
     widget_context: Res<KayakWidgetContext>,
     mut commands: Commands,
 ) -> bool {
-
     let parent_id = Some(entity);
-    
+
     rsx! {
         <BackgroundBundle
             styles={KStyle {
@@ -24,7 +27,7 @@ pub fn ui_list(
                 border_radius: Corner::all(4.).into(),
                 background_color: Color::hex(BLACK).unwrap().into(),
                 ..Default::default()
-            }}> 
+            }}>
             <ElementBundle
                 styles={KStyle{
                     layout_type: LayoutType::Grid.into(),

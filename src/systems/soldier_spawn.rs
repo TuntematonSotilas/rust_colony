@@ -4,7 +4,10 @@ use bevy_ecs_tilemap::{
     tiles::TilePos,
 };
 
-use crate::resources::{soldiers_state::SoldiersState, player_state::{PlayerState, PlayerRace}};
+use crate::resources::{
+    player_state::{PlayerRace, PlayerState},
+    soldiers_state::SoldiersState,
+};
 use crate::{
     components::animation_timer::AnimationTimer,
     utils::constant::{SOLDIER_SPRITE_NB, SOLDIER_SPRITE_SIZE, Z_MAP_BASE_LAYER},
@@ -27,12 +30,13 @@ pub fn soldier_spawn(
             if map_transform.translation.z == Z_MAP_BASE_LAYER {
                 let tile_pos = TilePos { x: 25, y: 25 };
                 let world_pos = tile_to_world(tile_pos, *grid_size, *map_type, map_transform);
-                
+
                 let sprite_name = match player_state.player_race {
                     PlayerRace::Human => "human",
-                    PlayerRace::Gray => "gray"
+                    PlayerRace::Gray => "gray",
                 };
-                let texture_handle = asset_server.load(format!("/public/sprites/{}.png", sprite_name));
+                let texture_handle =
+                    asset_server.load(format!("/public/sprites/{sprite_name}.png"));
                 let texture_atlas = TextureAtlas::from_grid(
                     texture_handle,
                     Vec2::new(SOLDIER_SPRITE_SIZE, SOLDIER_SPRITE_SIZE),

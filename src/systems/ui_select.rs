@@ -1,7 +1,11 @@
-use bevy::{prelude::*};
+use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{components::ui_select::{UiSelectState}, utils::constant::{DARK_RED, LIGHT_RED, BLACK, GREEN}, resources::player_state::{PlayerRace, PlayerState}};
+use crate::{
+    components::ui_select::UiSelectState,
+    resources::player_state::{PlayerRace, PlayerState},
+    utils::constant::{BLACK, DARK_RED, GREEN, LIGHT_RED},
+};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_select(
@@ -11,51 +15,49 @@ pub fn ui_select(
     state_query: Query<&UiSelectState>,
     asset_server: Res<AssetServer>,
 ) -> bool {
-
-
     let state_entity = widget_context.use_state(&mut commands, entity, UiSelectState::default());
 
     if let Ok(state) = state_query.get(state_entity) {
-    
         let on_event = OnEvent::new(
-            move |In(_entity): In<Entity>, 
-                mut event: ResMut<KEvent>,
-                mut query: Query<&mut UiSelectState>,
-                mut player_state: ResMut<PlayerState>| {
-                    if let Ok(mut select) = query.get_mut(state_entity) {
-                        match event.event_type {
-                            EventType::MouseIn(..) => {
-                                event.stop_propagation();
-                                select.hovering = true;
-                            }
-                            EventType::MouseOut(..) => {
-                                select.hovering = false;
-                            }
-                            EventType::Click(..) => {
-                                select.player_race = match select.player_race.clone() {
-                                    PlayerRace::Human => PlayerRace::Gray,
-                                    PlayerRace::Gray => PlayerRace::Human
-                               };
-                               player_state.player_race = select.player_race.clone();
-                            }
-                            _ => {} 
+            move |In(_entity): In<Entity>,
+                  mut event: ResMut<KEvent>,
+                  mut query: Query<&mut UiSelectState>,
+                  mut player_state: ResMut<PlayerState>| {
+                if let Ok(mut select) = query.get_mut(state_entity) {
+                    match event.event_type {
+                        EventType::MouseIn(..) => {
+                            event.stop_propagation();
+                            select.hovering = true;
                         }
+                        EventType::MouseOut(..) => {
+                            select.hovering = false;
+                        }
+                        EventType::Click(..) => {
+                            select.player_race = match select.player_race.clone() {
+                                PlayerRace::Human => PlayerRace::Gray,
+                                PlayerRace::Gray => PlayerRace::Human,
+                            };
+                            player_state.player_race = select.player_race.clone();
+                        }
+                        _ => {}
                     }
-                },
+                }
+            },
         );
 
         let parent_id = Some(entity);
 
-        let color = match state.hovering {
-            true => Color::hex(LIGHT_RED).unwrap(),
-            false => Color::hex(DARK_RED).unwrap(),
+        let color = if state.hovering {
+            Color::hex(LIGHT_RED).unwrap()
+        } else {
+            Color::hex(DARK_RED).unwrap()
         };
 
         let pic_name = match state.player_race {
             PlayerRace::Human => "human",
             PlayerRace::Gray => "gray",
         };
-        let image: Handle<Image> = asset_server.load(format!("/public/ui/{}.png", pic_name));
+        let image: Handle<Image> = asset_server.load(format!("/public/ui/{pic_name}.png"));
 
         let text = match state.player_race {
             PlayerRace::Human => "Human",
@@ -73,7 +75,7 @@ pub fn ui_select(
                     grid_cols: vec![Units::Pixels(50.0), Units::Pixels(30.0)].into(),
                     ..default()
                 }}>
-                
+
                 <BackgroundBundle
                     styles={KStyle {
                         row_index: 0.into(),
@@ -84,7 +86,7 @@ pub fn ui_select(
                         border_color: Color::hex(DARK_RED).unwrap().into(),
                         background_color: Color::hex(BLACK).unwrap().into(),
                         ..Default::default()
-                    }}> 
+                    }}>
                     <TextWidgetBundle
                         styles={KStyle {
                             left: Units::Stretch(1.).into(),
@@ -113,8 +115,8 @@ pub fn ui_select(
                         background_color: Color::hex(BLACK).unwrap().into(),
                         ..Default::default()
                     }}
-                    on_event = {on_event}> 
-                    
+                    on_event = {on_event}>
+
                     <KImageBundle
                         image={KImage(image)}
                         styles={KStyle {
@@ -128,11 +130,11 @@ pub fn ui_select(
                             ..Default::default()
                         }} />
 
-                </BackgroundBundle> 
+                </BackgroundBundle>
             </ElementBundle>
-                
+
         };
     }
-    
+
     true
 }

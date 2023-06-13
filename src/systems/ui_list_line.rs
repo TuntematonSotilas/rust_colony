@@ -1,7 +1,11 @@
-use bevy::{prelude::*};
+use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::{utils::constant::{BLACK, BLUE, WHITE}, components::ui_list_line::{UiListLineState, UiListLine}, resources::player_state::{PlayerState, PlayerMap}};
+use crate::{
+    components::ui_list_line::{UiListLine, UiListLineState},
+    resources::player_state::{PlayerMap, PlayerState},
+    utils::constant::{BLACK, BLUE, WHITE},
+};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_list_line(
@@ -11,49 +15,49 @@ pub fn ui_list_line(
     state_query: Query<&UiListLineState>,
     query: Query<&UiListLine>,
 ) -> bool {
-
     if let Ok(ui_list_line) = query.get(entity) {
-        let state_entity = widget_context.use_state(&mut commands, entity, UiListLineState::default());
+        let state_entity =
+            widget_context.use_state(&mut commands, entity, UiListLineState::default());
 
         if let Ok(state) = state_query.get(state_entity) {
-        
             let parent_id = Some(entity);
-            
+
             let map = ui_list_line.player_map.clone();
 
             let on_event = OnEvent::new(
-                move |In(_entity): In<Entity>, 
-                    mut event: ResMut<KEvent>,
-                    mut query: Query<&mut UiListLineState>,
-                    mut player_state: ResMut<PlayerState>| {
-                        let map = map.clone();
+                move |In(_entity): In<Entity>,
+                      mut event: ResMut<KEvent>,
+                      mut query: Query<&mut UiListLineState>,
+                      mut player_state: ResMut<PlayerState>| {
+                    let map = map.clone();
 
-                        if let Ok(mut line) = query.get_mut(state_entity) {
-                            match event.event_type {
-                                EventType::MouseIn(..) => {
-                                    event.stop_propagation();
-                                    line.hovering = true;
-                                }
-                                EventType::MouseOut(..) => {
-                                    line.hovering = false;
-                                }
-                                EventType::Click(..) => {
-                                   player_state.player_map = map;
-                                }
-                                _ => {} 
+                    if let Ok(mut line) = query.get_mut(state_entity) {
+                        match event.event_type {
+                            EventType::MouseIn(..) => {
+                                event.stop_propagation();
+                                line.hovering = true;
                             }
+                            EventType::MouseOut(..) => {
+                                line.hovering = false;
+                            }
+                            EventType::Click(..) => {
+                                player_state.player_map = map;
+                            }
+                            _ => {}
                         }
-                    },
+                    }
+                },
             );
 
-            let text = match ui_list_line.player_map  {
+            let text = match ui_list_line.player_map {
                 PlayerMap::Desert => "Desert (2 Player)",
-                PlayerMap::Jungle => "Jungle (2 Player)"
+                PlayerMap::Jungle => "Jungle (2 Player)",
             };
 
-            let color = match state.hovering {
-                true => Color::hex(WHITE).unwrap(),
-                false => Color::hex(BLUE).unwrap(),
+            let color = if state.hovering {
+                Color::hex(WHITE).unwrap()
+            } else {
+                Color::hex(BLUE).unwrap()
             };
 
             rsx! {

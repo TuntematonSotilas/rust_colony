@@ -1,12 +1,20 @@
-use bevy::{prelude::*};
+use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
-    components::{ui_main_menu::{MainMenu, MainMenuState, MainMenuBundle}, ui_button::{UiButton, UiButtonState}, ui_select::{UiSelectState, UiSelect}, ui_list::{UiList, UiListState}, ui_list_line::{UiListLine, UiListLineState}},
+    components::{
+        ui_button::{UiButton, UiButtonState},
+        ui_list::{UiList, UiListState},
+        ui_list_line::{UiListLine, UiListLineState},
+        ui_main_menu::{MainMenu, MainMenuBundle, MainMenuState},
+        ui_select::{UiSelect, UiSelectState},
+    },
     states::game_state::GameState,
-    systems::{ui_main_menu::ui_main_menu, ui_button::ui_button, ui_select::ui_select, ui_list::ui_list, ui_list_line::ui_list_line},
+    systems::{
+        ui_button::ui_button, ui_list::ui_list, ui_list_line::ui_list_line,
+        ui_main_menu::ui_main_menu, ui_select::ui_select,
+    },
 };
-
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_spawn(
@@ -17,9 +25,8 @@ pub fn ui_spawn(
     mut game_state: ResMut<State<GameState>>,
 ) {
     if !camera_q.is_empty() && game_state.0 == GameState::MenuLoad {
+        game_state.0 = GameState::MainMenu;
 
-		game_state.0 = GameState::MainMenu;
-		
         let camera_entity = camera_q.single();
 
         font_mapping.set_default(asset_server.load("/public/fonts/monorita.kttf"));

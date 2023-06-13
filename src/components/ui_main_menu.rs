@@ -1,4 +1,4 @@
-use bevy::prelude::{Component, Bundle};
+use bevy::prelude::{Bundle, Component};
 use kayak_ui::prelude::{Widget, WidgetName};
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
