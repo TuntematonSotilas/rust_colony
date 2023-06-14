@@ -4,7 +4,7 @@ use kayak_ui::prelude::{widgets::*, *};
 use crate::{
     components::ui_list_line::{UiListLine, UiListLineState},
     resources::player_state::{PlayerMap, PlayerState},
-    utils::constant::{BLACK, BLUE, WHITE},
+    utils::constant::{BLACK, BLUE, WHITE, DARK_BLUE},
 };
 
 #[allow(clippy::needless_pass_by_value)]
@@ -14,6 +14,7 @@ pub fn ui_list_line(
     mut commands: Commands,
     state_query: Query<&UiListLineState>,
     query: Query<&UiListLine>,
+    player_state: Res<PlayerState>,
 ) -> bool {
     if let Ok(ui_list_line) = query.get(entity) {
         let state_entity =
@@ -54,10 +55,13 @@ pub fn ui_list_line(
                 PlayerMap::Jungle => "Jungle (2 Player)",
             };
 
-            let color = if state.hovering {
-                Color::hex(WHITE).unwrap()
-            } else {
-                Color::hex(BLUE).unwrap()
+            let mut bkg = Color::hex(BLACK).unwrap();
+            let mut color = Color::hex(BLUE).unwrap();
+            if player_state.player_map == ui_list_line.player_map {
+                bkg = Color::hex(DARK_BLUE).unwrap();
+                color =  Color::hex(BLACK).unwrap();
+            } else if state.hovering {
+                color = Color::hex(DARK_BLUE).unwrap()
             };
 
             rsx! {
@@ -66,12 +70,14 @@ pub fn ui_list_line(
                         left: Units::Stretch(1.).into(),
                         right: Units::Stretch(1.).into(),
                         width: Units::Pixels(200.).into(),
-                        background_color: Color::hex(BLACK).unwrap().into(),
+                        background_color: bkg.into(),
                         ..Default::default()
                     }}
                     on_event = {on_event} >
                     <TextWidgetBundle
                         styles={KStyle {
+                            top: Units::Stretch(1.).into(),
+                            bottom: Units::Stretch(1.).into(),
                             left: Units::Stretch(1.).into(),
                             right: Units::Stretch(1.).into(),
                             width: Units::Pixels(200.).into(),
