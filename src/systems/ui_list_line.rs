@@ -4,7 +4,7 @@ use kayak_ui::prelude::{widgets::*, *};
 use crate::{
     components::ui_list_line::{UiListLine, UiListLineState},
     resources::player_state::{PlayerMap, PlayerState},
-    utils::constant::{BLACK, BLUE, WHITE, DARK_BLUE},
+    utils::constant::{BLACK, BLUE, DARK_BLUE},
 };
 
 #[allow(clippy::needless_pass_by_value)]
