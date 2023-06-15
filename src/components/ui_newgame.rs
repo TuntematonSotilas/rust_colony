@@ -2,24 +2,24 @@ use bevy::prelude::{Bundle, Component};
 use kayak_ui::prelude::{Widget, WidgetName};
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
-pub struct UiMainMenu {}
+pub struct UiNewGame {}
 
-impl Widget for UiMainMenu {}
+impl Widget for UiNewGame {}
 
 #[derive(Component, Default, Clone, Eq, PartialEq)]
-pub struct UiMainMenuState {}
+pub struct UiNewGameState {}
 
 #[derive(Bundle)]
-pub struct UiMainMenuBundle {
-    pub ui_main_menu: UiMainMenu,
+pub struct UiNewGameBundle {
+    pub ui_new_game: UiNewGame,
     pub widget_name: WidgetName,
 }
 
-impl Default for UiMainMenuBundle {
+impl Default for UiNewGameBundle {
     fn default() -> Self {
         Self {
-            ui_main_menu: UiMainMenu::default(),
-            widget_name: UiMainMenu::default().get_name(),
+            ui_new_game: UiNewGame::default(),
+            widget_name: UiNewGame::default().get_name(),
         }
     }
 }

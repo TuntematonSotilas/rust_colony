@@ -6,13 +6,13 @@ use crate::{
         ui_button::{UiButton, UiButtonState},
         ui_list::{UiList, UiListState},
         ui_list_line::{UiListLine, UiListLineState},
-        ui_main_menu::{MainMenu, MainMenuBundle, MainMenuState},
-        ui_select::{UiSelect, UiSelectState},
+        ui_main_menu::{UiMainMenu, UiMainMenuBundle, UiMainMenuState},
+        ui_select::{UiSelect, UiSelectState}, ui_newgame::{UiNewGame, UiNewGameState},
     },
     states::game_state::GameState,
     systems::{
         ui_button::ui_button, ui_list::ui_list, ui_list_line::ui_list_line,
-        ui_main_menu::ui_main_menu, ui_select::ui_select,
+        ui_main_menu::ui_main_menu, ui_select::ui_select, ui_new_game::ui_new_game,
     },
 };
 
@@ -35,9 +35,15 @@ pub fn ui_spawn(
         widget_context.add_plugin(KayakWidgetsContextPlugin);
 
         widget_context.add_widget_system(
-            MainMenu::default().get_name(),
-            widget_update::<MainMenu, MainMenuState>,
+            UiMainMenu::default().get_name(),
+            widget_update::<UiMainMenu, UiMainMenuState>,
             ui_main_menu,
+        );
+
+        widget_context.add_widget_system(
+            UiNewGame::default().get_name(),
+            widget_update::<UiNewGame, UiNewGameState>,
+            ui_new_game,
         );
 
         widget_context.add_widget_system(
@@ -67,7 +73,7 @@ pub fn ui_spawn(
         let parent_id = None;
         rsx! {
             <KayakAppBundle>
-               <MainMenuBundle />
+               <UiMainMenuBundle />
             </KayakAppBundle>
         };
 
