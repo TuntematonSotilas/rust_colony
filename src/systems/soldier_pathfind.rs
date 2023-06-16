@@ -31,7 +31,7 @@ pub fn soldier_pathfind(
                         soldier.init_pos = None;
                     } else {
                         // Get soldier tile
-                        let sol_pos = Vec4::from((soldier.current_pos, 1.0, 1.0));
+                        let sol_pos = Vec4::from((soldier.current_pos, 1., 1.));
                         let sol_in_map_pos = map_transform.compute_matrix().inverse() * sol_pos;
                         let sol_in_map_pos_xy = sol_in_map_pos.xy();
 

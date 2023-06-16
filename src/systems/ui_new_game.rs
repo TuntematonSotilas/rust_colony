@@ -1,14 +1,13 @@
 use bevy::prelude::*;
 use kayak_ui::prelude::{widgets::*, *};
 
-use crate::components::{ui_newgame::UiNewGameState, ui_select::UiSelectBundle, ui_list::UiListBundle, ui_button::{UiButtonBundle, UiButton}};
+use crate::components::{ui_select::UiSelectBundle, ui_list::UiListBundle, ui_button::{UiButtonBundle, UiButton}};
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn ui_new_game(
     In(entity): In<Entity>,
     widget_context: Res<KayakWidgetContext>,
     mut commands: Commands,
-    new_game_state: Query<&UiNewGameState>,
 ) -> bool {
 
     let parent_id = Some(entity);

@@ -29,7 +29,7 @@ pub fn mouse_click(
                     if let Some(ray) = camera.viewport_to_world(camera_transform, screen_position) {
                         // get 2d world mouse coordinates from the ray
                         let world_position: Vec2 = ray.origin.truncate();
-                        let cursor_pos = Vec4::from((world_position, 1.0, 1.0));
+                        let cursor_pos = Vec4::from((world_position, 1., 1.));
                         let cursor_in_map_pos =
                             map_transform.compute_matrix().inverse() * cursor_pos;
                         let cursor_in_map_pos_xy = cursor_in_map_pos.xy();

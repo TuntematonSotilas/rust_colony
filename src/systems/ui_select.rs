@@ -71,8 +71,8 @@ pub fn ui_select(
                     left: Units::Stretch(1.).into(),
                     right: Units::Stretch(1.).into(),
                     layout_type: LayoutType::Grid.into(),
-                    grid_rows: vec![Units::Pixels(25.0)].into(),
-                    grid_cols: vec![Units::Pixels(50.0), Units::Pixels(30.0)].into(),
+                    grid_rows: vec![Units::Pixels(25.)].into(),
+                    grid_cols: vec![Units::Pixels(80.), Units::Pixels(50.)].into(),
                     ..default()
                 }}>
 
@@ -91,8 +91,8 @@ pub fn ui_select(
                         styles={KStyle {
                             left: Units::Stretch(1.).into(),
                             right: Units::Stretch(1.).into(),
-                            top: Units::Stretch(1.0).into(),
-                            bottom: Units::Stretch(1.0).into(),
+                            top: Units::Stretch(1.).into(),
+                            bottom: Units::Stretch(1.).into(),
                             color: Color::hex(GREEN).unwrap().into(),
                             font_size: (12.).into(),
                             ..Default::default()
@@ -121,10 +121,10 @@ pub fn ui_select(
                         image={KImage(image)}
                         styles={KStyle {
                             position_type: KPositionType::SelfDirected.into(),
-                            top: Units::Stretch(1.0).into(),
-                            bottom: Units::Stretch(1.0).into(),
-                            left: Units::Stretch(1.0).into(),
-                            right: Units::Stretch(1.0).into(),
+                            top: Units::Stretch(1.).into(),
+                            bottom: Units::Stretch(1.).into(),
+                            left: Units::Stretch(1.).into(),
+                            right: Units::Stretch(1.).into(),
                             width: Units::Pixels(14.).into(),
                             height: Units::Pixels(14.).into(),
                             ..Default::default()

@@ -1,15 +1,12 @@
-use bevy::prelude::*;
+use bevy::{prelude::*};
 use kayak_ui::prelude::{widgets::*, *};
 
 use crate::{
     components::{
         ui_button::{UiButton, UiButtonBundle},
-        ui_list::UiListBundle,
-        ui_main_menu::UiMainMenuState,
-        ui_select::UiSelectBundle, ui_newgame::{UiNewGameBundle, UiNewGame},
+        ui_main_menu::UiMainMenuState, ui_newgame::{UiNewGameBundle},
     },
-    states::game_state::GameState,
-    utils::constant::SAND,
+    states::game_state::GameState, utils::constant::SAND,
 };
 
 #[allow(clippy::needless_pass_by_value)]
@@ -28,7 +25,8 @@ pub fn ui_main_menu(
             widget_context.use_state(&mut commands, entity, UiMainMenuState::default());
 
         if menu_state.get(state_entity).is_ok() {
-            let image: Option<Handle<bevy::prelude::Image>> = if game_state.0 == GameState::MainMenu
+
+            let image: Option<Handle<bevy::prelude::Image>> = if game_state.0 == GameState::MainMenu || game_state.0 == GameState::NewGameMenu
             {
                 Some(asset_server.load("/public/ui/menu.png"))
             } else {
@@ -50,20 +48,19 @@ pub fn ui_main_menu(
                                         image={KImage(image.unwrap())}
                                         styles={KStyle {
                                             position_type: KPositionType::SelfDirected.into(),
-                                            top: Units::Stretch(1.0).into(),
-                                            bottom: Units::Stretch(1.0).into(),
-                                            left: Units::Stretch(1.0).into(),
-                                            right: Units::Stretch(1.0).into(),
+                                            top: Units::Stretch(1.).into(),
+                                            bottom: Units::Stretch(1.).into(),
+                                            left: Units::Stretch(1.).into(),
+                                            right: Units::Stretch(1.).into(),
                                             width: Units::Pixels(640.).into(),
                                             height: Units::Pixels(480.).into(),
                                             ..Default::default()
                                         }} />
-
                                     <ElementBundle
                                         styles={KStyle{
                                             position_type: KPositionType::SelfDirected.into(),
-                                            top: Units::Stretch(1.0).into(),
-                                            bottom: Units::Stretch(1.0).into(),
+                                            top: Units::Stretch(1.).into(),
+                                            bottom: Units::Stretch(1.).into(),
                                             layout_type: LayoutType::Grid.into(),
                                             grid_rows: vec![Units::Pixels(60.), Units::Pixels(60.)].into(),
                                             grid_cols: vec![Units::Stretch(1.)].into(),
@@ -111,73 +108,34 @@ pub fn ui_main_menu(
                             }
                         } else {
                             constructor! {
-                                <ElementBundle
-                                    styles={KStyle{
-                                        position_type: KPositionType::SelfDirected.into(),
-                                        grid_rows: vec![Units::Pixels(200.)].into(),
-                                        grid_cols: vec![Units::Stretch(1.)].into(),
-                                        layout_type: LayoutType::Grid.into(),
-                                        top: Units::Stretch(1.0).into(),
-                                        bottom: Units::Stretch(1.0).into(),
-                                        left: Units::Stretch(1.).into(),
-                                        right: Units::Stretch(1.).into(),
-                                        width: Units::Pixels(500.).into(),
-                                        height: Units::Pixels(500.).into(),
-                                        ..default()
-                                    }}>
-                                    <ElementBundle
-                                            styles={KStyle{
-                                                row_index: 0.into(),
-                                                col_index: 0.into(),
-                                                left: Units::Stretch(1.).into(),
-                                                right: Units::Stretch(1.).into(),
-                                                ..default()
-                                            }}>
-                                        <UiNewGameBundle ui_new_game={UiNewGame::default() } />
-                                    </ElementBundle>
-                                </ElementBundle>
-                               //<UiNewGameBundle ui_new_game={UiNewGame::default() } />
-                              /* <ElementBundle
-                                    styles={KStyle{
-                                        layout_type: LayoutType::Grid.into(),
-                                        grid_rows: vec![Units::Pixels(40.), Units::Pixels(120.), Units::Pixels(40.)].into(),
-                                        grid_cols: vec![Units::Stretch(1.)].into(),
-                                        left: Units::Stretch(1.).into(),
-                                        right: Units::Stretch(1.).into(),
-                                        padding: (Edge::new(Units::Pixels(40.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.))).into(),
-                                        ..default()
-                                    }}>
-                                    <ElementBundle
-                                        styles={KStyle{
-                                            row_index: 0.into(),
-                                            col_index: 0.into(),
-                                            left: Units::Stretch(1.).into(),
-                                            right: Units::Stretch(1.).into(),
-                                            ..default()
-                                        }}>
-                                        <UiSelectBundle />
-                                    </ElementBundle>
-                                    <ElementBundle
-                                        styles={KStyle{
-                                            row_index: 1.into(),
-                                            col_index: 0.into(),
-                                            left: Units::Stretch(1.).into(),
-                                            right: Units::Stretch(1.).into(),
-                                            ..default()
-                                        }}>
-                                        <UiListBundle />
-                                    </ElementBundle>
-                                    <ElementBundle
-                                        styles={KStyle{
-                                            row_index: 2.into(),
-                                            col_index: 0.into(),
-                                            left: Units::Stretch(1.).into(),
-                                            right: Units::Stretch(1.).into(),
-                                            ..default()
-                                        }}>
-                                        <UiButtonBundle ui_button={UiButton { text: "READY".to_string() }} />
-                                    </ElementBundle>
-                                </ElementBundle>*/
+								<ElementBundle
+									styles={KStyle{
+										left: Units::Stretch(1.).into(),
+										right: Units::Stretch(1.).into(),
+										..default()
+									}}>
+									<BackgroundBundle 
+										styles={KStyle{
+											position_type: KPositionType::SelfDirected.into(),	
+											top: Units::Stretch(1.).into(),
+                                            bottom: Units::Stretch(1.).into(),
+											left: Units::Pixels(1.).into(),
+											width: Units::Pixels(1.).into(),
+											..default()
+										}}
+									/>
+									<ElementBundle
+										styles={KStyle{
+											position_type: KPositionType::SelfDirected.into(),
+                                            top: Units::Stretch(1.).into(),
+                                            bottom: Units::Stretch(1.).into(),
+											left: Units::Stretch(1.).into(),
+											right: Units::Stretch(1.).into(),
+											..default()
+										}}>
+										<UiNewGameBundle />
+									</ElementBundle>
+								</ElementBundle>
                             }
                         }
                     }
