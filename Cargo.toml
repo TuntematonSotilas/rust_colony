@@ -17,11 +17,11 @@ bevy = { version = "0.10.1", default-features = true, features = [
    "bevy_sprite",
    "png",
 ] }
-wasm-bindgen = "0.2.84"
+wasm-bindgen = "0.2.87"
 bevy_ecs_tilemap = { version = "0.10.0", features = ["atlas", "render"] }
 tiled = { version = "0.10.2", default-features = false }
-web-sys = { version = "0.3.61", features = ["Window", "Document", "Element"] }
-pathfinding = "4.2.1"
+web-sys = { version = "0.3.64", features = ["Window", "Document", "Element"] }
+pathfinding = "4.3.0"
 kayak_ui = "0.4.1"
 
 [dev-dependencies]
