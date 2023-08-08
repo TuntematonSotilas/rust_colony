@@ -7,3 +7,4 @@ pub mod ui_button;
 pub mod ui_list;
 pub mod ui_list_line;
 pub mod ui_select;
+pub mod ui_hud;

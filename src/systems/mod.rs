@@ -15,3 +15,4 @@ pub mod ui_main_menu;
 pub mod ui_select;
 pub mod ui_spawn;
 pub mod ui_new_game;
+pub mod ui_hud;

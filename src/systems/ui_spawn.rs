@@ -8,11 +8,13 @@ use crate::{
         ui_list_line::{UiListLine, UiListLineState},
         ui_main_menu::{UiMainMenu, UiMainMenuBundle, UiMainMenuState},
         ui_select::{UiSelect, UiSelectState}, ui_newgame::{UiNewGame, UiNewGameState},
+        ui_hud::{UiHud, UiHudState},
     },
     states::game_state::GameState,
     systems::{
         ui_button::ui_button, ui_list::ui_list, ui_list_line::ui_list_line,
         ui_main_menu::ui_main_menu, ui_select::ui_select, ui_new_game::ui_new_game,
+        ui_hud::ui_hud
     },
 };
 
@@ -47,6 +49,12 @@ pub fn ui_spawn(
         );
 
         widget_context.add_widget_system(
+            UiHud::default().get_name(),
+            widget_update::<UiHud, UiHudState>,
+            ui_hud,
+        );
+
+        widget_context.add_widget_system(
             UiButton::default().get_name(),
             widget_update::<UiButton, UiButtonState>,
             ui_button,
@@ -69,6 +77,8 @@ pub fn ui_spawn(
             widget_update::<UiListLine, UiListLineState>,
             ui_list_line,
         );
+
+        
 
         let parent_id = None;
         rsx! {

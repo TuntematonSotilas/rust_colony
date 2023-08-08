@@ -15,12 +15,10 @@ pub fn ui_new_game(
     rsx! {
         <ElementBundle
             styles={KStyle{
+                position_type: KPositionType::SelfDirected.into(),
                 layout_type: LayoutType::Grid.into(),
                 grid_rows: vec![Units::Pixels(40.), Units::Pixels(120.), Units::Pixels(40.)].into(),
                 grid_cols: vec![Units::Stretch(1.)].into(),
-                left: Units::Stretch(1.).into(),
-                right: Units::Stretch(1.).into(),
-                padding: (Edge::new(Units::Pixels(40.), Units::Pixels(0.), Units::Pixels(0.), Units::Pixels(0.))).into(),
                 ..default()
             }}>
             <ElementBundle
